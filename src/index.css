@@ -1,0 +1,57 @@
+@import "tailwindcss";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Scrollbar time */
+html::-webkit-scrollbar {
+  width: 8px; /* Slightly wider for the main page scrollbar */
+}
+
+html::-webkit-scrollbar-track {
+  background: #1f2937; /* A very dark gray*/
+}
+
+html::-webkit-scrollbar-thumb {
+  background-color: #0ea5e9; /* Sky-400 for the thumb */
+  border-radius: 4px;
+  border: 2px solid #1f2937; /* Creates a padding effect around the thumb */
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  background-color: #38bdf8; /* Lighter sky blue on hover */
+}
+
+/* For Firefox - page scrollbar */
+html {
+  scrollbar-width: thin;
+  scrollbar-color: #0ea5e9 #1f2937; /* thumb color track color */
+}
+
+@layer components {
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 6px; /* Width of the scrollbar */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent; /* Make track transparent */
+    border-radius: 3px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background-color: #0ea5e9; /* Sky-400 for the thumb */
+    border-radius: 3px;
+    /* border: 1px solid #1F2937; */
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #38bdf8; /* Lighter sky blue on hover */
+  }
+
+  /* For Firefox */
+  .custom-scrollbar {
+    scrollbar-width: thin;
+    scrollbar-color: #0ea5e9 transparent; /* thumb color track color for elements, track is transparent */
+  }
+}
