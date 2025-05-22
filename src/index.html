@@ -7,6 +7,7 @@
   <title>Gabe Shores - Portfolio</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+  <!--Need to work to unify my css in tailwind-->
   <style>
     /* Hide content b4 animation is done */
     #main-content.hidden {
@@ -33,6 +34,36 @@
       display: flex;
       flex-direction: column;
       overflow-y: auto;
+    }
+
+    /* Mobile terminal adjustments */
+    @media (max-width: 640px) {
+      #terminal-sequence-overlay {
+        padding: 10px;
+      }
+      #terminal-output, #terminal-cursor-line {
+        font-size: 13px; /* Smaller font on mobile */
+        line-height: 1.3;
+        white-space: pre-wrap; /* Allow text to wrap on mobile */
+      }
+      #terminal-output > div > .output {
+        padding-left: 1em; /* Less indentation on mobile */
+      }
+    }
+
+    /* Improved navigation buttons for mobile */
+    @media (max-width: 640px) {
+      #prev-project, #next-project {
+        width: 10px !important;
+        height: 10px !important;
+        transform: translateY(-50%) !important;
+      }
+      #prev-project {
+        left: -5px !important;
+      }
+      #next-project {
+        right: -5px !important;
+      }
     }
 
     #terminal-output > div > .command::before {
@@ -81,6 +112,49 @@
     section[id] {
         scroll-margin-top: 80px;
     }
+
+    /* Mobile Menu Styles */
+    .mobile-menu-container {
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .desktop-menu {
+        display: none;
+      }
+      .mobile-menu-container {
+        display: block;
+      }
+      .mobile-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background-color: #0f172a;
+        border-bottom: 1px solid #334155;
+        width: 100%;
+        z-index: 50;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        transform: translateY(-10px);
+        opacity: 0;
+        visibility: hidden;
+        transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
+      }
+      .mobile-menu.show {
+        transform: translateY(0);
+        opacity: 1;
+        visibility: visible;
+      }
+      .mobile-menu a {
+        display: block;
+        padding: 0.75rem 1.5rem;
+        border-bottom: 1px solid #334155;
+        text-align: center;
+      }
+      .mobile-menu a:last-child {
+        border-bottom: none;
+      }
+    }
   </style>
 </head>
 <body class="bg-neutral-900 text-neutral-300 font-mono">
@@ -94,9 +168,11 @@
   </div>
 
   <header class="bg-neutral-950 sticky top-0 z-50 shadow-md">
-    <div class="container mx-auto flex justify-between items-center p-4">
+    <div class="container mx-auto flex justify-between items-center p-4 relative">
       <h1 class="text-2xl text-sky-400"><span id="name"></span><span class="animate-pulse">_</span></h1>
-      <nav>
+      
+      <!-- Desktop Navigation -->
+      <nav class="desktop-menu">
         <ul class="flex space-x-4 md:space-x-6">
           <li><a href="#about" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// About</a></li>
           <li><a href="#projects" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// Projects</a></li>
@@ -104,10 +180,23 @@
           <li><a href="#contact-section" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// Contact</a></li>
         </ul>
       </nav>
+      
+      <!-- Mobile Navigation -->
+      <div class="mobile-menu-container">
+        <button id="mobile-menu-button" class="text-sky-400 hover:text-white transition-colors duration-200 text-2xl focus:outline-none p-1">
+          <i class="fas fa-bars"></i>
+        </button>
+        <div id="mobile-menu" class="mobile-menu">
+          <a href="#about" class="text-sky-400 hover:text-white transition-colors duration-200">// About</a>
+          <a href="#projects" class="text-sky-400 hover:text-white transition-colors duration-200">// Projects</a>
+          <a href="#education" class="text-sky-400 hover:text-white transition-colors duration-200">// Resume</a>
+          <a href="#contact-section" class="text-sky-400 hover:text-white transition-colors duration-200">// Contact</a>
+        </div>
+      </div>
     </div>
   </header>
 
-  <!--Placeholder text from my resume / lowkey chatgpt generated text. REPLACE-->
+  <!--Placeholder text from my resume Working to replace-->
   <main id="main-content" class="container mx-auto p-4 mt-16 flex flex-col items-center hidden"> 
     <section id="about" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl flex flex-col md:flex-row items-center text-center md:text-left">
       <div class="md:mr-8 mb-6 md:mb-0 flex-grow">
@@ -129,6 +218,7 @@
           </a>
         </div>
       </div>
+      <!--Need to get a better headshot-->
       <img src="./assets/LinkedinHeadshot.jpg" alt="Gabe Shores" class="rounded-full w-36 h-36 md:w-52 md:h-52 object-cover border-4 border-sky-500 shadow-2xl flex-shrink-0 mt-6 md:mt-0">
     </section>
 
@@ -146,7 +236,7 @@
                 <img src="./assets/Research.png" alt="Undergraduate Research Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
                 <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Undergraduate Research - PhysiCell">PhysiCell Research</h3>
                 <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Contributing to the open-source PhysiCell project, a platform for 3D agent-based cell modeling.</li>
+                  <li>Contributing to the open-source PhysiCell project, a cell-simulation software.</li>
                   <li>Optimizes diffusion equations using numerical analysis and partial differential equations to model nutrient transport.</li>
                   <li>Applying high-level math in Python and C++ to improve simulation speeds by up to 1000%.</li>
                 </ul>
@@ -156,7 +246,7 @@
                 <img src="./assets/Scheduling Bot.png" alt="EduAdvisor AI Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
                 <h3 class="text-lg font-semibold text-white mb-2 truncate" title="EduAdvisor AI - Indiana University AI Course Scheduler">EduAdvisor AI</h3>
                 <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Collaborated with fellow students through Git and used React.js, Tailwind, Vite, Flask, and the Google Gemini API to create a responsive, secure, full-stack application.</li>
+                  <li>Collaborated with peers through Git, using React.js, Tailwind, Vite, Flask, and the Google Gemini API to create a responsive, full-stack application.</li>
                   <li>Scraped and analyzed 8 years of academic data (~100k+ entries) to drive smart course planning.</li>
                 </ul>
               </div>
@@ -176,7 +266,6 @@
                 <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
                   <li>A neural network, perceptron, made fully in pure Java.</li>
                   <li>Able to score 95%+ on MNIST digit recognition.</li>
-                  <li>Technologies: Java</li>
                 </ul>
               </div>
                <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
@@ -184,7 +273,7 @@
                 <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Fintech Discord Bot">Fintech Club Discord Bot</h3>
                 <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
                   <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs.</li>
-                  <li>Developed dynamic and interactive bots allowing members to view and engage with the club's real fund.</li>
+                  <li>Developed dynamic and interactive bots allowing members to view and engage with the club's market fund</li>
                 </ul>
               </div>
             </div>
@@ -202,7 +291,7 @@
     <!-- Experience & Research Section -->
     <section id="experience" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Experience & Research</h2>
+        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Experience &</span> Research</h2>
         <canvas id="experience-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-8">
@@ -235,7 +324,7 @@
     <!-- Leadership Section -->
     <section id="leadership" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Leadership</h2>
+        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Leadership</span></h2>
         <canvas id="leadership-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-8">
@@ -267,7 +356,7 @@
     <!-- Education Section -->
     <section id="education" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Education</h2>
+        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Education</span></h2>
         <canvas id="education-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-6">
@@ -316,7 +405,7 @@
     <!-- Interests Section -->
     <section id="interests" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Other Interests</h2>
+        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Other</span> Interests</h2>
         <canvas id="interests-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 leading-relaxed text-sm">
@@ -335,7 +424,7 @@
     <!-- Contact Section -->
     <section id="contact-section" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl text-center scroll-mt-20">
       <div class="flex items-center justify-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 mr-4">// Get In Touch</h2>
+        <h2 class="text-3xl font-bold text-sky-400 mr-4">// <span class="whitespace-nowrap">Get In</span> Touch</h2>
         <canvas id="contact-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 text-lg mb-6">

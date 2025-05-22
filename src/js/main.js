@@ -522,12 +522,16 @@ let terminalSequenceInitialized = false;
 window.onload = () => {
   console.log("window.onload: Script execution started.");
 
+  // Assign DOM elements now that the DOM is fully loaded
   nameElement = document.getElementById('name');
   terminalOverlay = document.getElementById('terminal-sequence-overlay');
   terminalContent = document.getElementById('terminal-output');
   terminalCursor = document.getElementById('terminal-cursor-line');
   loadingOverlay = document.getElementById('loading-overlay');
   mainContent = document.getElementById('main-content');
+
+  // Setup mobile menu
+  setupMobileMenu();
 
   console.log("DOM Elements after assignment:", {
     nameElement,
@@ -594,12 +598,39 @@ window.onload = () => {
           try { initInterestsAnimation(); } catch(e) { console.error("Error initInterestsAnimation:", e); }
           try { initContactAnimation(); } catch(e) { console.error("Error initContactAnimation:", e); }
           try { initProjectsCarousel(); } catch(e) { console.error("Error initProjectsCarousel:", e); }
-        } // Corrected position of closing brace for if(currentMainContent)
+        }
     }, 1500);
   }
 
   console.log("window.onload: Script execution finished initial setup.");
 };
+
+// Mobile menu functionality
+function setupMobileMenu() {
+  const mobileMenuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuButton && mobileMenu) {
+    mobileMenuButton.addEventListener('click', () => {
+      mobileMenu.classList.toggle('show');
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove('show');
+      }
+    });
+    
+    // Close menu when a link is clicked
+    const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+    mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        mobileMenu.classList.remove('show');
+      });
+    });
+  }
+}
 
 function initProjectsCarousel() {
     const carousel = document.getElementById('projects-carousel');
@@ -647,7 +678,7 @@ function initProjectsCarousel() {
     // Initial position: show the first "original" card, which is now offset by the prepended clones.
     let currentIndex = totalCards > 1 ? CLONE_COUNT * totalCards : 0;
 
-    // Remove previous card style modifications (scale, opacity)
+    // Remove previous card style modifications
     allCards.forEach(card => {
         card.style.transform = ''; // Reset transform
         card.style.opacity = '';   // Reset opacity

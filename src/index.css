@@ -4,7 +4,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Scrollbar time */
+/* Scrollbar time!!! */
 html::-webkit-scrollbar {
   width: 8px; /* Slightly wider for the main page scrollbar */
 }
