@@ -394,14 +394,6 @@
                   graphs.</li>
               </ul>
               <div class="flex space-x-4 mt-auto">
-                <!-- Assuming no link provided yet, or maybe GitHub? -->
-                <!-- The prompt didn't strictly give a link, but I'll add a GitHub icon assuming it might be there or needed. -->
-                <!-- Actually, better safe than sorry, I'll add the GitHub link structure but leave href empty or # if not known, 
-                     but since user provided "github.com/Msde-7/" generally, I'll point to their profile or just omit if unsure. 
-                     Refining: I will add a GitHub icon button pointing to their main profile if I don't have a specific repo, 
-                     or better, just omit the link if I don't have it. 
-                     Wait, the prompt listed links in the header, not specific per project. 
-                     I will Include a GitHub button pointing to https://github.com/Msde-7/ assuming it's there. -->
                 <a href="https://github.com/Msde-7/" target="_blank"
                   class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
                   title="GitHub">
@@ -609,19 +601,17 @@
       <div class="space-y-6">
         <div>
           <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-          <p class="text-neutral-400 italic">Accelerated B.S. / M.S. Computer Science | B.S. Mathematics | Minor in
-            Italian</p>
+          <p class="text-neutral-400 italic">M.S. Computer Science</p>
           <p class="text-neutral-500 text-sm">Expected Graduation: May 2027</p>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
+          <p class="text-neutral-400 italic">B.S. Computer Science | B.S. Mathematics | Minor in Italian</p>
+          <p class="text-neutral-500 text-sm">Expected Graduation: May 2026</p>
           <p class="text-neutral-500 text-sm">GPA: 3.88 / 4.00</p>
           <p class="text-neutral-500 mt-1 text-sm">Honors: Cox, Luddy, Founder’s, and Provost Scholar. Luddy and
             Executive Dean’s List (4x). Honors College</p>
         </div>
-      </div>
-      <div>
-        <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-        <p class="text-neutral-400 italic">Accelerated M.S. Computer Science</p>
-        <p class="text-neutral-500 text-sm">Expected Graduation: August 2026 – May 2027</p>
-      </div>
       </div>
     </section>
 
@@ -687,19 +677,21 @@
     </section>
 
     <!-- Contact Section -->
-    <section id="contact-section"
-      class="p-8 mb-12 w-full max-w-4xl text-center scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center justify-center mb-6">
-        <h2 class="text-3xl font-bold text-white mr-4">[ <span class="whitespace-nowrap">Get In</span> Touch ]</h2>
+    <section id="contact-section" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
+      <div class="flex items-center mb-6">
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span class="whitespace-nowrap">Get
+            In</span> Touch ]</h2>
         <canvas id="contact-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
-      <p class="text-neutral-300 text-lg mb-6">
-        I'm always open to discussing new projects, creative ideas, or opportunities to be part of something amazing.
+      <p class="text-neutral-300 text-lg mb-6 max-w-4xl">
+        Always open to discussing new projects, creative ideas, or opportunities.
       </p>
-      <a href="mailto:gshores@iu.edu"
-        class="inline-block bg-white text-black font-bold py-3 px-6 rounded-none hover:bg-black hover:text-white border border-white transition-colors duration-300 text-lg">
-        Say Hello <i class="fas fa-paper-plane ml-2"></i>
-      </a>
+      <div class="flex justify-center">
+        <a href="mailto:gshores@iu.edu"
+          class="inline-block bg-white text-black font-bold py-3 px-6 rounded-none hover:bg-black hover:text-white border border-white transition-colors duration-300 text-lg">
+          Say Hello <i class="fas fa-paper-plane ml-2"></i>
+        </a>
+      </div>
     </section>
 
   </main>
