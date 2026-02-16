@@ -1,11 +1,15 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="./output.css" rel="stylesheet">
   <title>Gabe Shores - Portfolio</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="icon" type="image/svg+xml" href="./assets/Picture.svg">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
   <!--Need to work to unify my css in tailwind-->
   <style>
@@ -16,21 +20,25 @@
       transform: translateY(20px);
       transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
+
     #main-content {
-        opacity: 0; /* Start transparent for transition */
-        transform: translateY(20px); /* Start slightly lower for transition */
-        transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+      opacity: 0;
+      /* Start transparent for transition */
+      transform: translateY(20px);
+      /* Start slightly lower for transition */
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
 
     /* Tad bit of tomfoolery here */
     #terminal-sequence-overlay {
       position: fixed;
       inset: 0;
-      background-color: #171717; /* UPDATED to bg-neutral-900  */
-      color: #0ea5e9; /* Ensure text is sky blue */
+      background-color: #000000;
+      color: #e5e5e5;
       font-family: 'Courier New', Courier, monospace;
       padding: 20px;
-      z-index: 200; /* Higher than loading-overlay */
+      z-index: 200;
+      /* Higher than loading-overlay */
       display: flex;
       flex-direction: column;
       overflow-y: auto;
@@ -41,380 +49,628 @@
       #terminal-sequence-overlay {
         padding: 10px;
       }
-      #terminal-output, #terminal-cursor-line {
-        font-size: 13px; /* Smaller font on mobile */
+
+      #terminal-output,
+      #terminal-cursor-line {
+        font-size: 13px;
+        /* Smaller font on mobile */
         line-height: 1.3;
-        white-space: pre-wrap; /* Allow text to wrap on mobile */
+        white-space: pre-wrap;
+        /* Allow text to wrap on mobile */
       }
-      #terminal-output > div > .output {
-        padding-left: 1em; /* Less indentation on mobile */
+
+      #terminal-output>div>.output {
+        padding-left: 1em;
+        /* Less indentation on mobile */
       }
     }
 
     /* Improved navigation buttons for mobile */
     @media (max-width: 640px) {
-      #prev-project, #next-project {
+
+      #prev-project,
+      #next-project {
         width: 10px !important;
         height: 10px !important;
         transform: translateY(-50%) !important;
       }
+
       #prev-project {
         left: -5px !important;
       }
+
       #next-project {
         right: -5px !important;
       }
     }
 
-    #terminal-output > div > .command::before {
+    #terminal-output>div>.command::before {
       content: "> ";
-      color: #0ea5e9; /* prompt is now blue fr */
+      color: #ffffff;
     }
-    #terminal-output > div > .output {
-      padding-left: 1.5em; /* Indent output lines */
+
+    #terminal-output>div>.output {
+      padding-left: 1.5em;
+      /* Indent output lines */
     }
+
     .cursor {
       display: inline-block;
-      background-color: #0ea5e9; /* sky blue */
+      background-color: #ffffff;
       width: 10px;
       height: 1.5em;
       animation: blink 1s step-end infinite;
     }
+
     @keyframes blink {
-      from, to { background-color: transparent }
-      50% { background-color: #0ea5e9; } 
+
+      from,
+      to {
+        background-color: transparent
+      }
+
+      50% {
+        background-color: #ffffff;
+      }
     }
 
     /* Initial hide for loading overlay */
     #loading-overlay.hidden {
-        display: none;
-        opacity: 0;
+      display: none;
+      opacity: 0;
     }
+
     #loading-overlay {
-        opacity: 0; /* Start hidden */
-        transition: opacity 0.5s ease-in; /* Transition for showing */
+      opacity: 0;
+      /* Start hidden */
+      transition: opacity 0.5s ease-in;
+      /* Transition for showing */
     }
 
     /* Utility to hide scrollbar */
     .scrollbar-hide::-webkit-scrollbar {
       display: none;
     }
+
     .scrollbar-hide {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      -ms-overflow-style: none;
+      /* IE and Edge */
+      scrollbar-width: none;
+      /* Firefox */
     }
 
     /* Smooth scrolling for anchor links */
     html {
       scroll-behavior: smooth;
     }
+
     /* Offset for sticky header */
     section[id] {
-        scroll-margin-top: 80px;
+      scroll-margin-top: 80px;
     }
 
     /* Mobile Menu Styles */
     .mobile-menu-container {
       display: none;
     }
-    
+
     @media (max-width: 768px) {
       .desktop-menu {
         display: none;
       }
+
       .mobile-menu-container {
         display: block;
       }
+
       .mobile-menu {
         position: absolute;
         top: 100%;
         left: 0;
         right: 0;
-        background-color: #0f172a;
-        border-bottom: 1px solid #334155;
+        background-color: #000000;
+        border-bottom: 1px solid #262626;
         width: 100%;
         z-index: 50;
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        box-shadow: none;
         transform: translateY(-10px);
         opacity: 0;
         visibility: hidden;
         transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
       }
+
       .mobile-menu.show {
         transform: translateY(0);
         opacity: 1;
         visibility: visible;
       }
+
       .mobile-menu a {
         display: block;
         padding: 0.75rem 1.5rem;
-        border-bottom: 1px solid #334155;
+        border-bottom: 1px solid #262626;
         text-align: center;
       }
+
       .mobile-menu a:last-child {
         border-bottom: none;
       }
     }
   </style>
 </head>
-<body class="bg-neutral-900 text-neutral-300 font-mono">
+
+<body class="bg-[#0a0a0a] text-neutral-200 font-mono selection:bg-neutral-200 selection:text-black">
   <div id="terminal-sequence-overlay">
     <div id="terminal-output"></div>
     <div id="terminal-cursor-line"><span class="command"></span><span class="cursor"></span></div>
   </div>
-  <div id="loading-overlay" class="fixed inset-0 bg-neutral-900 bg-opacity-95 flex flex-col justify-center items-center z-[100] transition-opacity duration-500 ease-out hidden">
+  <div id="loading-overlay"
+    class="fixed inset-0 bg-black flex flex-col justify-center items-center z-[100] transition-opacity duration-500 ease-out hidden">
     <canvas id="bg-canvas" class="w-32 h-32 md:w-40 md:h-40 mb-6"></canvas> <!-- Canvas for the sphere -->
-    <p class="text-sky-400 text-2xl md:text-3xl font-mono animate-pulse">loading...</p>
+    <p class="text-white text-2xl md:text-3xl font-mono animate-pulse">loading...</p>
   </div>
 
-  <header class="bg-neutral-950 sticky top-0 z-50 shadow-md">
+  <header class="bg-black/90 backdrop-blur-sm sticky top-0 z-50 border-b border-neutral-800">
     <div class="container mx-auto flex justify-between items-center p-4 relative">
-      <h1 class="text-2xl text-sky-400"><span id="name"></span><span class="animate-pulse">_</span></h1>
-      
+      <h1 class="text-2xl text-white"><span id="name"></span><span class="animate-pulse">_</span></h1>
+
       <!-- Desktop Navigation -->
       <nav class="desktop-menu">
         <ul class="flex space-x-4 md:space-x-6">
-          <li><a href="#about" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// About</a></li>
-          <li><a href="#projects" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// Projects</a></li>
-          <li><a href="#education" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// Resume</a></li>
-          <li><a href="#contact-section" class="text-sky-400 hover:text-white transition-colors duration-200 text-sm md:text-base">// Contact</a></li>
+          <li><a href="#about"
+              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ About
+              ]</a></li>
+          <li><a href="#projects"
+              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Projects
+              ]</a></li>
+          <li><a href="#education"
+              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Resume
+              ]</a></li>
+          <li><a href="#contact-section"
+              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Contact
+              ]</a></li>
         </ul>
       </nav>
-      
+
       <!-- Mobile Navigation -->
       <div class="mobile-menu-container">
-        <button id="mobile-menu-button" class="text-sky-400 hover:text-white transition-colors duration-200 text-2xl focus:outline-none p-1">
+        <button id="mobile-menu-button"
+          class="text-white hover:text-neutral-400 transition-colors duration-200 text-2xl focus:outline-none p-1">
           <i class="fas fa-bars"></i>
         </button>
-        <div id="mobile-menu" class="mobile-menu">
-          <a href="#about" class="text-sky-400 hover:text-white transition-colors duration-200">// About</a>
-          <a href="#projects" class="text-sky-400 hover:text-white transition-colors duration-200">// Projects</a>
-          <a href="#education" class="text-sky-400 hover:text-white transition-colors duration-200">// Resume</a>
-          <a href="#contact-section" class="text-sky-400 hover:text-white transition-colors duration-200">// Contact</a>
+        <div id="mobile-menu" class="mobile-menu bg-black border-b border-neutral-800">
+          <a href="#about" class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[
+            About ]</a>
+          <a href="#projects"
+            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Projects ]</a>
+          <a href="#education"
+            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Resume ]</a>
+          <a href="#contact-section"
+            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Contact ]</a>
         </div>
       </div>
     </div>
   </header>
 
+  <!-- Fixed Background ASCII -->
+  <pre id="ascii-bg"
+    class="fixed inset-0 z-[-1] flex items-center justify-center text-sm md:text-3xl leading-[14px] md:leading-[24px] text-neutral-800 pointer-events-none opacity-80 overflow-hidden select-none font-mono"></pre>
+
   <!--Placeholder text from my resume Working to replace-->
-  <main id="main-content" class="container mx-auto p-4 mt-16 flex flex-col items-center hidden"> 
-    <section id="about" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl flex flex-col md:flex-row items-center text-center md:text-left">
+  <main id="main-content" class="container mx-auto p-4 mt-16 flex flex-col items-center hidden">
+    <section id="about"
+      class="p-8 mb-12 w-full max-w-4xl flex flex-col md:flex-row items-center text-center md:text-left border-b border-neutral-800 pb-12">
       <div class="md:mr-8 mb-6 md:mb-0 flex-grow">
         <!--Cringey ?-->
         <p class="text-neutral-300 text-xl md:text-2xl leading-relaxed mb-6">
           Hi, I'm Gabe! 👋 <br>
-          I like to build cool things.
+          Incoming SWE Intern @ Uber | CS & Math @ Indiana University | Undergrad Researcher
         </p>
         <div class="text-sm text-neutral-400 mb-6 space-y-2 text-left">
-          <p><i class="fas fa-envelope fa-fw mr-2 text-sky-400"></i> <a href="mailto:gshores@iu.edu" class="hover:text-sky-300">gshores@iu.edu</a></p>
-          <p><i class="fas fa-globe fa-fw mr-2 text-sky-400"></i> <a href="http://gabeshores.com" target="_blank" rel="noopener noreferrer" class="hover:text-sky-300">gabeshores.com</a></p>
+          <p><i class="fas fa-envelope fa-fw mr-2 text-neutral-500"></i> <a href="mailto:gshores@iu.edu"
+              class="hover:text-white transition-colors">gshores@iu.edu</a></p>
+          <p><i class="fas fa-globe fa-fw mr-2 text-neutral-500"></i> <a href="http://gabeshores.com" target="_blank"
+              rel="noopener noreferrer" class="hover:text-white transition-colors">gabeshores.com</a></p>
         </div>
         <div class="flex justify-center md:justify-start space-x-6">
-          <a href="https://linkedin.com/in/gabrielshores/" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-white transition-colors duration-200 text-3xl md:text-4xl" aria-label="LinkedIn Profile">
+          <a href="https://linkedin.com/in/gabrielshores/" target="_blank" rel="noopener noreferrer"
+            class="text-neutral-400 hover:text-white transition-colors duration-200 text-3xl md:text-4xl"
+            aria-label="LinkedIn Profile">
             <i class="fa-brands fa-linkedin"></i>
           </a>
-          <a href="https://github.com/Msde-7/" target="_blank" rel="noopener noreferrer" class="text-sky-400 hover:text-white transition-colors duration-200 text-3xl md:text-4xl" aria-label="GitHub Profile">
+          <a href="https://github.com/Msde-7/" target="_blank" rel="noopener noreferrer"
+            class="text-neutral-400 hover:text-white transition-colors duration-200 text-3xl md:text-4xl"
+            aria-label="GitHub Profile">
             <i class="fa-brands fa-github"></i>
           </a>
         </div>
       </div>
       <!--Need to get a better headshot-->
-      <img src="./assets/LinkedinHeadshot.jpg" alt="Gabe Shores" class="rounded-full w-36 h-36 md:w-52 md:h-52 object-cover border-4 border-sky-500 shadow-2xl flex-shrink-0 mt-6 md:mt-0">
+      <img src="./assets/Picture.svg" alt="Gabe Shores"
+        class="rounded-none w-36 h-36 md:w-52 md:h-52 object-contain border-none shadow-none flex-shrink-0 mt-6 md:mt-0 opacity-80 hover:opacity-100 transition-opacity duration-300">
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="projects" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-8">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Projects</h2>
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ Projects ]</h2>
         <canvas id="torus-knot-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="relative">
-        <div id="projects-carousel-wrapper" class="overflow-hidden">
-            <div id="projects-carousel" class="flex space-x-8 pb-4 transition-transform duration-500 ease-in-out">
-              <!-- New Project Card for Research -->
-              <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
-                <img src="./assets/Research.png" alt="Undergraduate Research Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
-                <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Undergraduate Research - PhysiCell">PhysiCell Research</h3>
-                <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Contributing to the open-source PhysiCell project, a cell-simulation software.</li>
-                  <li>Optimizes diffusion equations using numerical analysis and partial differential equations to model nutrient transport.</li>
-                  <li>Applying high-level math in Python and C++ to improve simulation speeds by up to 1000%.</li>
-                </ul>
-              </div>
-              <!-- Project Card 1 -->
-              <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
-                <img src="./assets/Scheduling Bot.png" alt="EduAdvisor AI Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
-                <h3 class="text-lg font-semibold text-white mb-2 truncate" title="EduAdvisor AI - Indiana University AI Course Scheduler">EduAdvisor AI</h3>
-                <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Collaborated with peers through Git, using React.js, Tailwind, Vite, Flask, and the Google Gemini API to create a responsive, full-stack application.</li>
-                  <li>Scraped and analyzed 8 years of academic data (~100k+ entries) to drive smart course planning.</li>
-                </ul>
-              </div>
-              <!-- Project Card 2 -->
-              <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
-                <img src="./assets/Eclipse.jpg" alt="Luddy Scholars’ Eclipse Team Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
-                <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Luddy Scholars’ Eclipse Team">Luddy Eclipse Project</h3>
-                <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Integrated OBS, NDI, and networking technologies to capture and stream live footage of the Great American Solar Eclipse, reaching over 3,000 online viewers and over 5,000 viewers at live events.</li>
-                  <li>Collaborated with peers to engage over 200 elementary school students via outreach programs.</li>
-                </ul>
-              </div>
-              <!-- Java Neural Network Project Card -->
-              <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
-                <img src="./assets/Java Neural Network.jpg" alt="Java Neural Network Project Image" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
-                <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Java Neural Network">Java Neural Network</h3>
-                <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>A neural network, perceptron, made fully in pure Java.</li>
-                  <li>Able to score 95%+ on MNIST digit recognition.</li>
-                </ul>
-              </div>
-               <div class="project-card flex-shrink-0 w-64 md:w-72 bg-neutral-800 rounded-lg shadow-lg p-4 transform hover:scale-105 transition-transform transition-opacity duration-300">
-                <img src="./assets/Fintech Bot.png" alt="Fintech Discord Bot" class="w-full h-32 md:h-40 object-cover rounded-md mb-3">
-                <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Fintech Discord Bot">Fintech Club Discord Bot</h3>
-                <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                  <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs.</li>
-                  <li>Developed dynamic and interactive bots allowing members to view and engage with the club's market fund</li>
-                </ul>
+        <div id="projects-carousel-wrapper"
+          class="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
+          <div id="projects-carousel" class="flex space-x-8 pb-4 transition-transform duration-500 ease-in-out">
+            <!-- Lawgic Prep Card -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
+              <img src="./assets/Lawgic.png" alt="Lawgic Prep"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate" title="Lawgic Prep">
+                Lawgic Prep</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
+                <li>Co-Founder & SWE. Official LSAC Licensee.</li>
+                <li>Real-time admissions chances for 70k+ users.</li>
+                <li>Built with modern web tech handling 900k+ applications data.</li>
+                <li><a href="https://lawgicprep.org" target="_blank"
+                    class="text-neutral-300 hover:underline">lawgicprep.org</a></li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://lawgicprep.org" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="Live Demo">
+                  <i class="fas fa-external-link-alt fa-lg"></i>
+                </a>
               </div>
             </div>
+
+            <!-- New Project Card for Research -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
+              <img src="./assets/Research.png" alt="Undergraduate Research Project Image"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate"
+                title="Undergraduate Research - PhysiCell">
+                PhysiCell Research</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
+                <li>Contributing to the open-source PhysiCell project, a cell-simulation software.</li>
+                <li>Optimizes diffusion equations using numerical analysis and partial differential equations to model
+                  nutrient transport.</li>
+                <li>Applying high-level math in Python and C++ to improve simulation speeds by up to 1000%.</li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://github.com/MathCancer/PhysiCell" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="GitHub">
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+                <a href="http://physicell.org/" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="Website">
+                  <i class="fas fa-external-link-alt fa-lg"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Project Card 1: EduAdvisor AI -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
+              <img src="./assets/Scheduling Bot.png" alt="EduAdvisor AI Project Image"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate"
+                title="EduAdvisor AI - Indiana University AI Course Scheduler">EduAdvisor AI</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
+                <li>Developed a full-stack, AI-powered course planning app using React, Tailwind, Vite, Flask, and the
+                  Gemini API.</li>
+                <li>Processed 100k+ records spanning over 8 years with NumPy and Pandas for more data-driven scheduling.
+                </li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://github.com/Msde-7/EduAdvisorAI" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="GitHub">
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+              </div>
+            </div>
+
+            <!-- New Project Card: Social Graph Anomaly Detector -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
+              <!-- Placeholder image for now, or reuse an existing one if no specific asset provided -->
+              <div
+                class="w-full h-32 md:h-40 bg-neutral-800 mb-3 flex items-center justify-center border border-neutral-700 dither-effect">
+                <i class="fas fa-project-diagram text-4xl text-neutral-400"></i>
+              </div>
+              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate" title="Social Graph Anomaly Detector">
+                Social Graph Anomaly Detector</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
+                <li>ML tool turns synthetic or Reddit/Twitter API data into graphs, flagging bots with IsolationForest
+                  for
+                  safety.</li>
+                <li>Python Streamlit app with Pandas, NetworkX, scikit-learn, PyVis detecting anomalies in 5k+ social
+                  graphs.</li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <!-- Assuming no link provided yet, or maybe GitHub? -->
+                <!-- The prompt didn't strictly give a link, but I'll add a GitHub icon assuming it might be there or needed. -->
+                <!-- Actually, better safe than sorry, I'll add the GitHub link structure but leave href empty or # if not known, 
+                     but since user provided "github.com/Msde-7/" generally, I'll point to their profile or just omit if unsure. 
+                     Refining: I will add a GitHub icon button pointing to their main profile if I don't have a specific repo, 
+                     or better, just omit the link if I don't have it. 
+                     Wait, the prompt listed links in the header, not specific per project. 
+                     I will Include a GitHub button pointing to https://github.com/Msde-7/ assuming it's there. -->
+                <a href="https://github.com/Msde-7/" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="GitHub">
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Project Card 2 -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
+              <img src="./assets/Eclipse.jpg" alt="Luddy Scholars’ Eclipse Team Project Image"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Luddy Scholars’ Eclipse Team">Luddy
+                Eclipse Project</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
+                <li>Integrated OBS, NDI, and networking technologies to capture and stream live footage of the Great
+                  American Solar Eclipse, reaching over 3,000 online viewers and over 5,000 viewers at live events.</li>
+                <li>Collaborated with peers to engage over 200 elementary school students via outreach programs.</li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://www.youtube.com/live/P9M_e3JJHZA?si=J07CNKmM7HrXZDqs" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="Watch Stream">
+                  <i class="fab fa-youtube fa-lg"></i>
+                </a>
+              </div>
+            </div>
+            <!-- Java Neural Network Project Card -->
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
+              <img src="./assets/Java Neural Network.jpg" alt="Java Neural Network Project Image"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Java Neural Network">Java Neural Network
+              </h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
+                <li>A neural network, perceptron, made fully in pure Java.</li>
+                <li>Able to score 95%+ on MNIST digit recognition.</li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://github.com/Msde-7/Neural-Network" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="GitHub">
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+              </div>
+            </div>
+            <div
+              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
+              <img src="./assets/Fintech Bot.png" alt="Fintech Discord Bot"
+                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
+              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Fintech Discord Bot">Fintech Club
+                Discord Bot</h3>
+              <ul
+                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
+                <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs.</li>
+                <li>Developed dynamic and interactive bots allowing members to view and engage with the club's market
+                  fund</li>
+              </ul>
+              <div class="flex space-x-4 mt-auto">
+                <a href="https://github.com/Msde-7/Fintech-Bot" target="_blank"
+                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
+                  title="GitHub">
+                  <i class="fab fa-github fa-lg"></i>
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
         <!-- Navigation Buttons -->
-        <button id="prev-project" class="absolute left-0 top-1/2 -translate-y-1/2 transform -translate-x-4 md:-translate-x-6 bg-neutral-800 hover:bg-sky-500 text-white p-3 rounded-full z-10 shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-50 w-12 h-12 flex items-center justify-center" style="border-width: 2px !important; border-style: solid !important; border-color: #0ea5e9 !important;">
+        <button id="prev-project"
+          class="absolute left-0 top-1/2 -translate-y-1/2 transform -translate-x-4 md:-translate-x-6 bg-black border border-white hover:bg-white hover:text-black text-white p-3 rounded-full z-10 shadow-none transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 w-12 h-12 flex items-center justify-center">
           <i class="fas fa-chevron-left fa-lg"></i>
         </button>
-        <button id="next-project" class="absolute right-0 top-1/2 -translate-y-1/2 transform translate-x-4 md:translate-x-6 bg-neutral-800 hover:bg-sky-500 text-white p-3 rounded-full z-10 shadow-lg transition-all duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-sky-400 focus:ring-opacity-50 w-12 h-12 flex items-center justify-center" style="border-width: 2px !important; border-style: solid !important; border-color: #0ea5e9 !important;">
+        <button id="next-project"
+          class="absolute right-0 top-1/2 -translate-y-1/2 transform translate-x-4 md:translate-x-6 bg-black border border-white hover:bg-white hover:text-black text-white p-3 rounded-full z-10 shadow-none transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 w-12 h-12 flex items-center justify-center">
           <i class="fas fa-chevron-right fa-lg"></i>
         </button>
       </div>
     </section>
 
     <!-- Experience & Research Section -->
-    <section id="experience" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="experience" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Experience &</span> Research</h2>
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
+            class="whitespace-nowrap">Experience &</span> Research ]</h2>
         <canvas id="experience-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-8">
         <div>
-          <h3 class="text-xl font-semibold text-white">Allied Solutions</h3>
-          <p class="text-sky-300 italic">Incoming Software Engineering Intern</p>
-          <p class="text-neutral-400 text-sm">May 2025 – August 2025</p>
+          <h3 class="text-xl font-semibold text-white">Uber</h3>
+          <p class="text-neutral-400 italic">Incoming Software Engineering Intern</p>
+          <p class="text-neutral-500 text-sm">Summer 2026</p>
         </div>
         <div>
-          <h3 class="text-xl font-semibold text-white">Math Cancer Lab, PhysiCell Project</h3>
-          <p class="text-sky-300 italic">Undergraduate Researcher & Open-Source Contributor</p>
-          <p class="text-neutral-400 text-sm">August 2024 – Present</p>
-          <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Contributing to an open-source cell modeling project through global collaboration with researchers.</li>
-            <li>Applying high-level math in Python and C++ to improve simulation speeds by up to 1000%.</li>
+          <h3 class="text-xl font-semibold text-white">Allied Solutions</h3>
+          <p class="text-neutral-400 italic">Software Engineering Intern</p>
+          <p class="text-neutral-500 text-sm">May 2025 – August 2025</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Automated manual document processing, saving over $64,000 annually in labor, by building an
+              event-driven,
+              cloud-native system with AWS Lambda, DynamoDB, API Gateway, REST APIs, and S3 storage buckets.</li>
+            <li>Improved performance for a high-traffic legacy system, used by over 1,000 financial institutions, by
+              modernizing C# .NET code and writing SQL Server scripts with AI-assisted development (Cursor) in an Agile
+              team.</li>
+            <li>Contributed to sprint planning, testing, CI/CD pipelines, and thorough code reviews to ensure reliable
+              delivery.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-white">Lawgic Prep</h3>
+          <p class="text-neutral-400 italic">Software Engineer, Co-Founder</p>
+          <p class="text-neutral-500 text-sm">November 2024 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Negotiated an Official LSAC License, enabling redistribution of official test material.</li>
+            <li>Engineered a full-stack app to run analytics on and serve over 6,000 questions across 58 tests,
+              utilizing React.js, Node.js, Tailwind, Go, Firestore, Cloud Functions, and Stripe.</li>
+            <li><a href="https://lawgicprep.org" target="_blank" class="text-white hover:underline">lawgicprep.org</a>
+            </li>
           </ul>
         </div>
         <div>
           <h3 class="text-xl font-semibold text-white">Indiana University Advising and Major Explorations Services</h3>
-          <p class="text-sky-300 italic">Peer Academic Coach, Data Team Member</p>
-          <p class="text-neutral-400 text-sm">August 2023 – Present</p>
-          <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Utilize Tableau, Excel, and Python to improve services, driving an over 100% gain in appointments.</li>
-            <li>Collaborating with advisors to assist students with scheduling, academic, and general college needs.</li>
+          <p class="text-neutral-400 italic">Peer Academic Coach, Data Analyst</p>
+          <p class="text-neutral-500 text-sm">August 2023 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Raised advising service usage by 40%+ with Tableau, Excel, and Python analysis, presenting at a
+              symposium.</li>
+            <li>Collaborated with advisors to assist students with scheduling, academic, and general college needs.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-white">LEMMA Research Lab</h3>
+          <p class="text-neutral-400 italic">Undergraduate Researcher</p>
+          <p class="text-neutral-500 text-sm">August 2025 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Developed computational experiments in Python and C++ to study convex geometry and geometric
+              probability.</li>
+            <li>Designed convex hull and point-inclusion algorithms using probabilistic theorems for geometric
+              computation.</li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-xl font-semibold text-white">Math Cancer Research Lab, PhysiCell Project</h3>
+          <p class="text-neutral-400 italic">Undergraduate Researcher & Open-Source Contributor</p>
+          <p class="text-neutral-500 text-sm">August 2024 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Contributed to a global cell simulation project, optimizing equations with numerical analysis in Python
+              and C++.</li>
+            <li>Cut simulation times by 3x for large biological models by caching and parallelizing code with CUDA and
+              OpenMP.</li>
           </ul>
         </div>
       </div>
     </section>
 
     <!-- Leadership Section -->
-    <section id="leadership" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="leadership" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Leadership</span></h2>
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
+            class="whitespace-nowrap">Leadership</span> ]</h2>
         <canvas id="leadership-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-8">
         <div>
           <h3 class="text-xl font-semibold text-white">Indiana University Student Government</h3>
-          <p class="text-sky-300 italic">Chief Technology Officer</p>
-          <p class="text-neutral-400 text-sm">April 2025 – Present</p>
-          <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Maintain IUSG site and tech systems, ensuring accessibility & accuracy for 35,000+ undergraduates.</li>
-            <li>Manage an intern and lead an executive committee coordinating projects, events, and tech policy.</li>
+          <p class="text-neutral-400 italic">Chief Technology Officer, Faculty Council Technology Policy Committee
+            Member
+          </p>
+          <p class="text-neutral-500 text-sm">May 2025 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Maintained IUSG website and tech systems, ensuring accessibility & accuracy for over 35,000
+              undergraduates.</li>
+            <li>Directed an intern and led an executive committee of peers, coordinating projects, events, and policy
+              initiatives.</li>
           </ul>
         </div>
         <div>
           <h3 class="text-xl font-semibold text-white">Fintech at Indiana University</h3>
-          <p class="text-sky-300 italic">Director of Technology</p>
-          <p class="text-neutral-400 text-sm">August 2024 – Present</p>
-          <ul class="list-disc list-inside text-neutral-300 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Simplifying complex CS concepts to 265+ members from diverse academic backgrounds.</li>
-            <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs to develop dynamic and interactive bots allowing members to view and engage with our fund.</li>
+          <p class="text-neutral-400 italic">Director of Technology</p>
+          <p class="text-neutral-500 text-sm">August 2024 – Present</p>
+          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
+            <li>Simplified and taught complex computer science topics to 265+ members from diverse academic backgrounds.
+            </li>
+            <li>Built a JavaScript & SQLite club fund Discord bot with real-time trading APIs, logging more than 400
+              interactions.</li>
           </ul>
         </div>
         <div>
           <h3 class="text-xl font-semibold text-white">Other Leadership</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">VP of Views IU (Hiking), Officer on HHCA Business and Sustainability Council</p>
+          <p class="text-neutral-300 leading-relaxed text-sm">VP of Views IU (Hiking), Officer on HHCA Business and
+            Sustainability Council</p>
         </div>
       </div>
     </section>
 
     <!-- Education Section -->
-    <section id="education" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="education" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Education</span></h2>
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
+            class="whitespace-nowrap">Education</span> ]</h2>
         <canvas id="education-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="space-y-6">
         <div>
           <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-          <p class="text-sky-300 italic">B.S. Computer Science, Mathematics | Italian Minor</p>
-          <p class="text-neutral-400 text-sm">Expected Graduation: May 2026</p>
-          <p class="text-neutral-400 text-sm">GPA: 3.95 / 4.00</p>
-          <p class="text-neutral-400 mt-1 text-sm">Honors: Cox, Luddy, Founder’s, and Provost Scholar. Luddy and Executive Dean’s List (3x). Honors College</p>
+          <p class="text-neutral-400 italic">Accelerated B.S. / M.S. Computer Science | B.S. Mathematics | Minor in
+            Italian</p>
+          <p class="text-neutral-500 text-sm">Expected Graduation: May 2027</p>
+          <p class="text-neutral-500 text-sm">GPA: 3.88 / 4.00</p>
+          <p class="text-neutral-500 mt-1 text-sm">Honors: Cox, Luddy, Founder’s, and Provost Scholar. Luddy and
+            Executive Dean’s List (4x). Honors College</p>
         </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-          <p class="text-sky-300 italic">Accelerated M.S. Computer Science</p>
-          <p class="text-neutral-400 text-sm">Expected Graduation: August 2026 – May 2027</p>
-        </div>
+      </div>
+      <div>
+        <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
+        <p class="text-neutral-400 italic">Accelerated M.S. Computer Science</p>
+        <p class="text-neutral-500 text-sm">Expected Graduation: August 2026 – May 2027</p>
+      </div>
       </div>
     </section>
 
     <!-- Skills Section -->
-    <section id="skills" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="skills" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// Skills</h2>
-        <canvas id="skills-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas> 
-      </div>      <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ Skills ]</h2>
+        <canvas id="skills-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
+      </div>
+      <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">Programming Languages</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">Java, C, C++, C#, Python, JavaScript, SQL, HTML, CSS</p>
+          <p class="text-neutral-300 leading-relaxed text-sm">Java, Python, C++, JavaScript / Node.js, Go, C#, SQL,
+            HTML, CSS, C</p>
         </div>
         <div>
           <h3 class="text-xl font-semibold text-white mb-2">Frameworks & Libraries</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">React.js, Tailwind CSS, Flask, PyTorch, NumPy, Firebase, Amazon Web Services</p>
+          <p class="text-neutral-300 leading-relaxed text-sm">AWS, Cursor, React.js, RESTful APIs, Git, PyTorch, NumPy,
+            Firebase, scikit-learn, Tailwind, Flask</p>
         </div>
         <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Development Tools & Environments</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">Git, Android Studio, JUnit, Unix/Linux</p>
+          <h3 class="text-xl font-semibold text-white mb-2">CS Coursework</h3>
+          <p class="text-neutral-400 text-sm">Machine Learning, Data Structures, Databases, C & Unix, Android
+            Development, Advanced Algorithms, Discrete Math</p>
         </div>
         <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Relevant Coursework</h3>
-          <p class="text-neutral-400 text-sm"><strong class="text-neutral-200">Computer Science:</strong> Software Systems, Data Structures, Databases, Computing Theory, C and Unix, Android Development, Machine Learning Theory, Discrete Structures for Computer Science</p>
-          <p class="text-neutral-400 text-sm mt-1"><strong class="text-neutral-200">Math:</strong> Linear Algebra, Calculus I–IV, Differential Equations I–II, Complex Analysis, Probability Theory</p>
+          <h3 class="text-xl font-semibold text-white mb-2">Math Coursework</h3>
+          <p class="text-neutral-400 text-sm">Linear Algebra, Statistics, Calculus I–IV, Differential Eq I–II, Real &
+            Complex Analysis, Probability, Numerical Analysis</p>
         </div>
       </div>
-        <div class="mt-8">
-          <!--Github contribution chart stylized blue-->
+      <div class="mt-8">
+        <!--Github contribution chart stylized monochrome-->
         <h3 class="text-xl font-semibold text-white mb-4">GitHub Contributions</h3>
-        <div class="bg-neutral-900 p-4 rounded-lg overflow-hidden">
-          <a href="https://github.com/Msde-7" target="_blank" rel="noopener noreferrer" class="block hover:opacity-90 transition-opacity">
-            <img src="https://ghchart.rshah.org/0ea5e9/Msde-7" alt="Gabe Shores's Github chart" class="w-full" />
-            <p class="text-neutral-400 text-xs mt-2 text-center">My GitHub contribution activiry</p>
+        <div class="bg-[#0a0a0a] border border-neutral-800 p-4 rounded-lg overflow-hidden">
+          <a href="https://github.com/Msde-7" target="_blank" rel="noopener noreferrer"
+            class="block hover:opacity-80 transition-opacity">
+            <img src="https://ghchart.rshah.org/000000/Msde-7" alt="Gabe Shores's Github chart" class="w-full invert" />
+            <p class="text-neutral-500 text-xs mt-2 text-center">My GitHub contribution activity</p>
           </a>
         </div>
       </div>
     </section>
 
     <!-- Interests Section -->
-    <section id="interests" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl scroll-mt-20">
+    <section id="interests" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 text-center md:text-left mr-4">// <span class="whitespace-nowrap">Other</span> Interests</h2>
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
+            class="whitespace-nowrap">Other</span> Interests ]</h2>
         <canvas id="interests-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 leading-relaxed text-sm">
@@ -423,29 +679,33 @@
     </section>
 
     <!-- Quote Section -->
-    <section id="quote" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl text-center scroll-mt-20">
+    <section id="quote" class="p-8 mb-12 w-full max-w-4xl text-center scroll-mt-20 border-b border-neutral-800 pb-12">
       <blockquote class="text-xl italic text-neutral-300 mb-4">
         "The struggle itself towards the heights is enough to fill a man's heart. One must imagine Sisyphus happy."
       </blockquote>
-      <p class="text-neutral-400 text-right">- Albert Camus</p>
+      <p class="text-neutral-500 text-right">- Albert Camus</p>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact-section" class="p-8 mb-12 w-full max-w-4xl bg-neutral-950 rounded-lg shadow-xl text-center scroll-mt-20">
+    <section id="contact-section"
+      class="p-8 mb-12 w-full max-w-4xl text-center scroll-mt-20 border-b border-neutral-800 pb-12">
       <div class="flex items-center justify-center mb-6">
-        <h2 class="text-3xl font-bold text-sky-400 mr-4">// <span class="whitespace-nowrap">Get In</span> Touch</h2>
+        <h2 class="text-3xl font-bold text-white mr-4">[ <span class="whitespace-nowrap">Get In</span> Touch ]</h2>
         <canvas id="contact-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 text-lg mb-6">
         I'm always open to discussing new projects, creative ideas, or opportunities to be part of something amazing.
       </p>
-      <a href="mailto:gshores@iu.edu" class="inline-block bg-sky-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-sky-600 transition-colors duration-300 text-lg">
+      <a href="mailto:gshores@iu.edu"
+        class="inline-block bg-white text-black font-bold py-3 px-6 rounded-none hover:bg-black hover:text-white border border-white transition-colors duration-300 text-lg">
         Say Hello <i class="fas fa-paper-plane ml-2"></i>
       </a>
     </section>
 
   </main>
 
+  <script src="./js/ascii.js?v=iu_finals_v8"></script>
   <script src="./js/main.js"></script>
 </body>
+
 </html>

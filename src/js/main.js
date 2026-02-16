@@ -32,9 +32,9 @@ const outputLines = [
     { text: "   │   Serving!                               │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
     { text: "   │                                          │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
     { text: "   │   - Local:    http://localhost:3000      │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
-    { text: `   │   - Network:  http://${networkIp}:3000│`, delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true }, //Ruins the aligning :( but neccessary to display
+    { text: `   │   - Network:  http://${networkIp}:3000│`, delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true }, 
     { text: "   │                                          │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
-    { text: "   │   Copied local address to clipboard!     │", delayAfter: 10, isOutput: true, color: 'text-green-400', instant: true },
+    { text: "   │   Copied local address to clipboard!     │", delayAfter: 10, isOutput: true, color: 'text-neutral-400', instant: true },
     { text: "   │                                          │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
     { text: "   └──────────────────────────────────────────┘", delayAfter: 500, isOutput: true, color: 'text-neutral-100', instant: true },
 ];
@@ -52,7 +52,7 @@ function typeLine(lineData, callback) {
     const newLine = document.createElement('div');
     if (lineData.isCommand) {
         const promptSpan = document.createElement('span');
-        promptSpan.className = 'text-sky-500';
+        promptSpan.className = 'text-white';
         promptSpan.textContent = '$ ';
         newLine.appendChild(promptSpan);
     }
@@ -211,7 +211,7 @@ function initThreeJS() {
 
     const geometry = new THREE.SphereGeometry(2.5, 16, 16); // Radius, widthSegments, heightSegments
     const material = new THREE.LineBasicMaterial({
-        color: 0x0ea5e9, // sky-400
+        color: 0xffffff, // white
         linewidth: 1,
     }); 
     
@@ -253,7 +253,7 @@ function initSkillsAnimation() {
 
     const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
     const material = new THREE.MeshBasicMaterial({
-        color: 0x0ea5e9, // sky-400
+        color: 0xffffff, // white
         wireframe: true,
     });
     skillsCube = new THREE.Mesh(geometry, material);
@@ -277,7 +277,7 @@ function animateSkills() {
 // Projects Animation
 function initProjectsAnimation() {
     console.log("Attempting to init Projects animation (Torus Knot)");
-    const projectsAnimationCanvas = document.getElementById('torus-knot-canvas'); // Changed ID
+    const projectsAnimationCanvas = document.getElementById('torus-knot-canvas');
     if (!projectsAnimationCanvas) {
         console.error("Projects animation canvas ('torus-knot-canvas') NOT FOUND in DOM!");
         return;
@@ -288,11 +288,11 @@ function initProjectsAnimation() {
     projectsCamera = new THREE.PerspectiveCamera(75, projectsAnimationCanvas.clientWidth / projectsAnimationCanvas.clientHeight, 0.1, 1000);
     projectsRenderer = new THREE.WebGLRenderer({ canvas: projectsAnimationCanvas, alpha: true });
     projectsRenderer.setSize(projectsAnimationCanvas.clientWidth, projectsAnimationCanvas.clientHeight);
-    projectsRenderer.setClearColor(0x000000, 0); // Transparent background
+    projectsRenderer.setClearColor(0x000000, 0);
 
-    const geometry = new THREE.TorusKnotGeometry(0.8, 0.2, 80, 10); // Radius, tube, tubularSegments, radialSegments. In short, cool little thing
+    const geometry = new THREE.TorusKnotGeometry(0.8, 0.2, 80, 10);
     const material = new THREE.LineBasicMaterial({
-        color: 0x0ea5e9, // sky-400
+        color: 0xffffff,
     });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     projectsKnot = new THREE.LineSegments(wireframeGeometry, material);
@@ -332,7 +332,7 @@ function initEducationAnimation() {
 
     graduationCapGroup = new THREE.Group(); // Create a group for the cap parts
 
-    const material = new THREE.LineBasicMaterial({ color: 0x0ea5e9 });
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
 
     // Cylinder part
     const cylinderRadius = 0.6;
@@ -388,7 +388,7 @@ function initExperienceAnimation() {
     experienceRenderer.setSize(experienceAnimationCanvas.clientWidth, experienceAnimationCanvas.clientHeight);
     experienceRenderer.setClearColor(0x000000, 0);
     const geometry = new THREE.ConeGeometry(0.8, 1.5, 16); // Radius, height, radialSegments
-    const material = new THREE.LineBasicMaterial({ color: 0x0ea5e9 });
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     experienceCone = new THREE.LineSegments(wireframeGeometry, material);
     experienceScene.add(experienceCone);
@@ -424,7 +424,7 @@ function initLeadershipAnimation() {
     leadershipRenderer.setSize(leadershipAnimationCanvas.clientWidth, leadershipAnimationCanvas.clientHeight);
     leadershipRenderer.setClearColor(0x000000, 0);
     const geometry = new THREE.OctahedronGeometry(1.0);
-    const material = new THREE.LineBasicMaterial({ color: 0x0ea5e9 });
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     leadershipOctahedron = new THREE.LineSegments(wireframeGeometry, material);
     leadershipScene.add(leadershipOctahedron);
@@ -460,7 +460,7 @@ function initInterestsAnimation() {
     interestsRenderer.setClearColor(0x000000, 0);
 
     const geometry = new THREE.DodecahedronGeometry(1.0); // Radius
-    const material = new THREE.LineBasicMaterial({ color: 0x0ea5e9 });
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     interestsDodecahedron = new THREE.LineSegments(wireframeGeometry, material);
     interestsScene.add(interestsDodecahedron);
@@ -496,7 +496,7 @@ function initContactAnimation() {
     contactRenderer.setClearColor(0x000000, 0);
 
     const geometry = new THREE.TorusGeometry(0.8, 0.3, 12, 48); // Radius, tube, radialSegments, tubularSegments
-    const material = new THREE.LineBasicMaterial({ color: 0x0ea5e9 });
+    const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     contactTorus = new THREE.LineSegments(wireframeGeometry, material);
     contactScene.add(contactTorus);
