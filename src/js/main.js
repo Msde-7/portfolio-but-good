@@ -41,8 +41,12 @@ const outputLines = [
 
 function typeChar(lineElement, text, charIndex, speed, callback) {
     if (charIndex < text.length) {
-        lineElement.innerHTML += text.charAt(charIndex);
-        setTimeout(() => typeChar(lineElement, text, charIndex + 1, speed, callback), speed);
+        const char = text.charAt(charIndex);
+        lineElement.innerHTML += char;
+        if (window.CRT) CRT.press(char);
+        // Vary the rate so it does not read as a metronome
+        const jitter = speed * (0.5 + Math.random() * 1.1);
+        setTimeout(() => typeChar(lineElement, text, charIndex + 1, speed, callback), jitter);
     } else {
         if (callback) callback();
     }
@@ -92,7 +96,8 @@ function typeLine(lineData, callback) {
             textSpan.textContent = lineData.text; // Set text directly for instant lines
             if (callback) setTimeout(callback, lineData.delayAfter || 1);
         } else {
-            typeChar(textSpan, lineData.text, 0, lineData.isCommand ? 35 : 15, () => { 
+            typeChar(textSpan, lineData.text, 0, lineData.isCommand ? 42 : 15, () => {
+                if (lineData.isCommand && window.CRT) CRT.enter();
                 if (callback) setTimeout(callback, lineData.delayAfter || 200);
             });
         }
@@ -128,18 +133,29 @@ function runTerminalSequence() {
             if (terminalCursor) terminalCursor.style.display = 'none'; 
 
             setTimeout(() => {
-                if (terminalOverlay) terminalOverlay.style.display = 'none';
-                if (loadingOverlay) {
-                    loadingOverlay.style.display = 'flex'; //💪
-                    loadingOverlay.style.opacity = '1';
-                }
+                // The loader sits under the machine, uncovered as it zooms past
+                const showLoader = () => {
+                    if (loadingOverlay) {
+                        loadingOverlay.style.display = 'flex';
+                        loadingOverlay.style.opacity = '1';
+                    }
 
-                try {
-                    console.log("Terminal sequence finished. Initializing loading sphere (initThreeJS)...");
-                    initThreeJS();
-                    console.log("Loading sphere initialized after terminal sequence.");
-                } catch (e) {
-                    console.error("Error in initThreeJS (loading sphere) after terminal:", e);
+                    try {
+                        initThreeJS();
+                    } catch (e) {
+                        console.error("Error in initThreeJS (loading sphere) after terminal:", e);
+                    }
+                };
+
+                const dropMachine = () => {
+                    if (terminalOverlay) terminalOverlay.style.display = 'none';
+                };
+
+                if (window.CRT) {
+                    CRT.dive(showLoader, dropMachine);
+                } else {
+                    showLoader();
+                    dropMachine();
                 }
 
                 setTimeout(() => {
@@ -185,12 +201,17 @@ function runTerminalSequence() {
                         try { initContactAnimation(); } catch(e) { console.error("Error initContactAnimation:", e); }
                         try { initProjectsCarousel(); } catch(e) { console.error("Error initProjectsCarousel:", e); }
                     } 
-                }, 1500); 
+                }, 1700);
             }, outputLines[outputLines.length - 1].delayAfter || 1000); // Corrected: Ensure this is outputLines[outputLines.length - 1]
         }
     }
-    if (terminalCursor) terminalCursor.style.display = 'inline-block'; 
-    nextCommand(); 
+    if (terminalCursor) terminalCursor.style.display = 'inline-block';
+
+    if (window.CRT && CRT.init()) {
+        CRT.powerOn(() => setTimeout(nextCommand, 450));
+    } else {
+        nextCommand();
+    }
 }
 
 // Loading Animation 💃
