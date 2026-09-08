@@ -92,7 +92,9 @@
   /* Scene ------------------------------------------------------------- */
 
   function flat(color, opts) {
-    return new THREE.MeshLambertMaterial(Object.assign({ color, flatShading: true }, opts || {}));
+    // No flatShading here. Lambert does not support it in r128, and its per
+    // vertex falloff on these big low poly walls is what keeps the room dark.
+    return new THREE.MeshLambertMaterial(Object.assign({ color }, opts || {}));
   }
 
   function box(w, h, d, material, x, y, z) {
@@ -200,7 +202,7 @@
     root.add(box(0.70, 0.90, 0.012, flat(0x14171c), 1.34, 1.06, -1.398));
 
     const card = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.30), helloCard());
-    card.position.set(-1.13, 0.50, -1.392);
+    card.position.set(-1.02, 0.46, -1.392);
     card.rotation.z = 0.03;
     root.add(card);
 
