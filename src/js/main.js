@@ -1,10 +1,9 @@
-let nameElement; // Declare globally containing the type writer
+let nameElement;
 const nameText = "Gabe Shores";
 let index = 0;
 let isDeleting = false;
 
-// Good lord you might think!!!! Just 3js animations though 🤪
-let scene, camera, renderer, sphere; // For loading sphere
+let scene, camera, renderer, sphere;
 let skillsScene, skillsCamera, skillsRenderer, skillsCube;
 let projectsScene, projectsCamera, projectsRenderer, projectsKnot;
 let educationScene, educationCamera, educationRenderer, graduationCapGroup;
@@ -13,7 +12,7 @@ let leadershipScene, leadershipCamera, leadershipRenderer, leadershipOctahedron;
 let interestsScene, interestsCamera, interestsRenderer, interestsDodecahedron;
 let contactScene, contactCamera, contactRenderer, contactTorus;
 
-let terminalOverlay, terminalContent, terminalCursor, loadingOverlay, mainContent; // Declare globally
+let terminalOverlay, terminalContent, terminalCursor, loadingOverlay, mainContent;
 
 const commands = [
     { text: "cd portfolio-project", delayAfter: 150 }, 
@@ -21,11 +20,8 @@ const commands = [
 ];
 
 
-//Dynamically generate?? Makes harder to format. not sure people will notice
-//Can I get their IP tho??
 const networkIp = "192.168.253.184";
 
-//Ugly ahhhhh display now in the code. looked better
 const outputLines = [
     { text: "   ┌──────────────────────────────────────────┐", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
     { text: "   │                                          │", delayAfter: 10, isOutput: true, color: 'text-neutral-100', instant: true },
@@ -74,7 +70,6 @@ function typeLine(lineData, callback) {
             if(linkElement) {
                 linkElement.addEventListener('click', (e) => {
                     e.preventDefault();
-                    console.log("Localhost link clicked (simulated)");
                 });
             }
             if (callback) setTimeout(callback, lineData.delayAfter || 200);
@@ -93,7 +88,7 @@ function typeLine(lineData, callback) {
         terminalContent.scrollTop = terminalContent.scrollHeight; 
 
         if (lineData.instant) {
-            textSpan.textContent = lineData.text; // Set text directly for instant lines
+            textSpan.textContent = lineData.text;
             if (callback) setTimeout(callback, lineData.delayAfter || 1);
         } else {
             typeChar(textSpan, lineData.text, 0, lineData.isCommand ? 42 : 15, () => {
@@ -105,7 +100,6 @@ function typeLine(lineData, callback) {
 }
 
 
-//Oddly was a pain in the ass
 function runTerminalSequence() {
     let currentCommandIndex = 0;
     let currentOutputIndex = 0;
@@ -119,7 +113,6 @@ function runTerminalSequence() {
                 else nextCommand(); 
             });
         } else {
-            console.log("Finished all commands in sequence.");
         }
     }
 
@@ -129,7 +122,6 @@ function runTerminalSequence() {
             currentOutputIndex++;
             typeLine(outputData, nextOutput); 
         } else {
-            console.log("Finished all output lines. Preparing to transition.");
             if (terminalCursor) terminalCursor.style.display = 'none'; 
 
             setTimeout(() => {
@@ -143,7 +135,7 @@ function runTerminalSequence() {
                     try {
                         initThreeJS();
                     } catch (e) {
-                        console.error("Error in initThreeJS (loading sphere) after terminal:", e);
+                        console.error("loading sphere failed", e);
                     }
                 };
 
@@ -176,33 +168,11 @@ function runTerminalSequence() {
                         currentMainContent.style.opacity = '1';
                         currentMainContent.style.transform = 'translateY(0)';
 
-                        console.log("Main content revealed. Now initializing section animations.");
 
-                        try {
-                            if (nameElement) {
-                                console.log("Main flow: Resetting and calling typeWriter...");
-                                index = 0;
-                                isDeleting = false;
-                                typeWriter();
-                                console.log("Main flow: typeWriter call initiated.");
-                            } else {
-                                console.error("Main flow: nameElement not found, cannot call typeWriter.");
-                            }
-                        } catch (e) {
-                            console.error("Main flow: Error calling typeWriter:", e);
-                        }
-
-                        try { initSkillsAnimation(); } catch(e) { console.error("Error initSkillsAnimation:", e); }
-                        try { initProjectsAnimation(); } catch(e) { console.error("Error initProjectsAnimation:", e); }
-                        try { initEducationAnimation(); } catch(e) { console.error("Error initEducationAnimation:", e); }
-                        try { initExperienceAnimation(); } catch(e) { console.error("Error initExperienceAnimation:", e); }
-                        try { initLeadershipAnimation(); } catch(e) { console.error("Error initLeadershipAnimation:", e); }
-                        try { initInterestsAnimation(); } catch(e) { console.error("Error initInterestsAnimation:", e); }
-                        try { initContactAnimation(); } catch(e) { console.error("Error initContactAnimation:", e); }
-                        try { initProjectsCarousel(); } catch(e) { console.error("Error initProjectsCarousel:", e); }
+                        startSectionAnimations();
                     } 
                 }, 1700);
-            }, outputLines[outputLines.length - 1].delayAfter || 1000); // Corrected: Ensure this is outputLines[outputLines.length - 1]
+            }, outputLines[outputLines.length - 1].delayAfter || 1000);
         }
     }
     if (terminalCursor) terminalCursor.style.display = 'inline-block';
@@ -214,29 +184,42 @@ function runTerminalSequence() {
     }
 }
 
-// Loading Animation 💃
+const sectionInits = [
+    initSkillsAnimation, initProjectsAnimation, initEducationAnimation,
+    initExperienceAnimation, initLeadershipAnimation, initInterestsAnimation,
+    initContactAnimation, initProjectsCarousel
+];
+
+// one section failing must not stop the rest
+function startSectionAnimations() {
+    if (nameElement) {
+        index = 0;
+        isDeleting = false;
+        typeWriter();
+    }
+    for (const init of sectionInits) {
+        try { init(); } catch (e) { console.error(init.name, e); }
+    }
+}
+
 function initThreeJS() {
-    console.log("Attempting to init loading sphere (initThreeJS)");
     const loadingSphereCanvas = document.getElementById('bg-canvas');
     if (!loadingSphereCanvas) {
-        console.error("Loading sphere canvas ('bg-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Loading sphere canvas found. Initializing scene...");
 
     scene = new THREE.Scene();
     camera = new THREE.PerspectiveCamera(75, loadingSphereCanvas.clientWidth / loadingSphereCanvas.clientHeight, 0.1, 1000);
     renderer = new THREE.WebGLRenderer({ canvas: loadingSphereCanvas, alpha: true });
     renderer.setSize(loadingSphereCanvas.clientWidth, loadingSphereCanvas.clientHeight);
-    renderer.setClearColor(0x000000, 0); // Transparent background
+    renderer.setClearColor(0x000000, 0);
 
-    const geometry = new THREE.SphereGeometry(2.5, 16, 16); // Radius, widthSegments, heightSegments
+    const geometry = new THREE.SphereGeometry(2.5, 16, 16);
     const material = new THREE.LineBasicMaterial({
-        color: 0xffffff, // white
+        color: 0xffffff,
         linewidth: 1,
     }); 
     
-    // Create a wireframe from the sphere geometry
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     sphere = new THREE.LineSegments(wireframeGeometry, material);
     scene.add(sphere);
@@ -256,25 +239,21 @@ function animate() {
         renderer.render(scene, camera);
 }
 
-// Skills Animation
 function initSkillsAnimation() {
-    console.log("Attempting to init Skills animation");
     const skillsAnimationCanvas = document.getElementById('skills-animation-canvas');
     if (!skillsAnimationCanvas) {
-        console.error("Skills animation canvas ('skills-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Skills animation canvas found. Initializing scene...");
 
     skillsScene = new THREE.Scene();
     skillsCamera = new THREE.PerspectiveCamera(75, skillsAnimationCanvas.clientWidth / skillsAnimationCanvas.clientHeight, 0.1, 1000);
     skillsRenderer = new THREE.WebGLRenderer({ canvas: skillsAnimationCanvas, alpha: true });
     skillsRenderer.setSize(skillsAnimationCanvas.clientWidth, skillsAnimationCanvas.clientHeight);
-    skillsRenderer.setClearColor(0x000000, 0); // Transparent background
+    skillsRenderer.setClearColor(0x000000, 0);
 
     const geometry = new THREE.BoxGeometry(1.5, 1.5, 1.5);
     const material = new THREE.MeshBasicMaterial({
-        color: 0xffffff, // white
+        color: 0xffffff,
         wireframe: true,
     });
     skillsCube = new THREE.Mesh(geometry, material);
@@ -295,15 +274,11 @@ function animateSkills() {
         skillsRenderer.render(skillsScene, skillsCamera);
 }
 
-// Projects Animation
 function initProjectsAnimation() {
-    console.log("Attempting to init Projects animation (Torus Knot)");
     const projectsAnimationCanvas = document.getElementById('torus-knot-canvas');
     if (!projectsAnimationCanvas) {
-        console.error("Projects animation canvas ('torus-knot-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Projects animation canvas found. Initializing scene...");
 
     projectsScene = new THREE.Scene();
     projectsCamera = new THREE.PerspectiveCamera(75, projectsAnimationCanvas.clientWidth / projectsAnimationCanvas.clientHeight, 0.1, 1000);
@@ -335,15 +310,11 @@ function animateProjects() {
     }
 }
 
-// Education Animation
 function initEducationAnimation() {
-    console.log("Attempting to init Education animation (Graduation Cap)"); //Not sure if anybody will see the vision
     const educationAnimationCanvas = document.getElementById('education-animation-canvas');
     if (!educationAnimationCanvas) {
-        console.error("Education animation canvas ('education-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Education animation canvas found. Initializing scene...");
 
     educationScene = new THREE.Scene();
     educationCamera = new THREE.PerspectiveCamera(75, educationAnimationCanvas.clientWidth / educationAnimationCanvas.clientHeight, 0.1, 1000);
@@ -351,11 +322,10 @@ function initEducationAnimation() {
     educationRenderer.setSize(educationAnimationCanvas.clientWidth, educationAnimationCanvas.clientHeight);
     educationRenderer.setClearColor(0x000000, 0);
 
-    graduationCapGroup = new THREE.Group(); // Create a group for the cap parts
+    graduationCapGroup = new THREE.Group();
 
     const material = new THREE.LineBasicMaterial({ color: 0xffffff });
 
-    // Cylinder part
     const cylinderRadius = 0.6;
     const cylinderHeight = 0.5;
     const cylinderGeometry = new THREE.CylinderGeometry(cylinderRadius, cylinderRadius, cylinderHeight, 16);
@@ -363,16 +333,14 @@ function initEducationAnimation() {
     const cylinderMesh = new THREE.LineSegments(cylinderWireframe, material);
     graduationCapGroup.add(cylinderMesh);
 
-    // Plane part
     const planeSize = 1.5;
     const planeGeometry = new THREE.PlaneGeometry(planeSize, planeSize);
     const planeWireframe = new THREE.WireframeGeometry(planeGeometry);
     const planeMesh = new THREE.LineSegments(planeWireframe, material);
-    planeMesh.position.y = cylinderHeight / 2 + 0.05; // Position it on top of the cylinder
-    planeMesh.rotation.x = Math.PI / 2; // Rotate it to be flat (Changed from -Math.pi -> Math.pi but might change back)
+    planeMesh.position.y = cylinderHeight / 2 + 0.05;
+    planeMesh.rotation.x = Math.PI / 2;
     graduationCapGroup.add(planeMesh);
     
-    //tassel later???????
 
     educationScene.add(graduationCapGroup);
     educationCamera.position.z = 3;
@@ -385,7 +353,7 @@ function initEducationAnimation() {
 function animateEducation() {
     requestAnimationFrame(animateEducation);
     if (graduationCapGroup) {
-        graduationCapGroup.rotation.x += 0.005; // Slower rotation for a cap might look better
+        graduationCapGroup.rotation.x += 0.005;
         graduationCapGroup.rotation.y += 0.01;
     }
     if (educationRenderer && educationScene && educationCamera) {
@@ -393,22 +361,18 @@ function animateEducation() {
     }
 }
 
-// Experience Animation
 function initExperienceAnimation() {
-    console.log("Attempting to init Experience animation");
     const experienceAnimationCanvas = document.getElementById('experience-animation-canvas');
     if (!experienceAnimationCanvas) {
-        console.error("Experience animation canvas ('experience-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Experience animation canvas found. Initializing scene...");
 
     experienceScene = new THREE.Scene();
     experienceCamera = new THREE.PerspectiveCamera(75, experienceAnimationCanvas.clientWidth / experienceAnimationCanvas.clientHeight, 0.1, 1000);
     experienceRenderer = new THREE.WebGLRenderer({ canvas: experienceAnimationCanvas, alpha: true });
     experienceRenderer.setSize(experienceAnimationCanvas.clientWidth, experienceAnimationCanvas.clientHeight);
     experienceRenderer.setClearColor(0x000000, 0);
-    const geometry = new THREE.ConeGeometry(0.8, 1.5, 16); // Radius, height, radialSegments
+    const geometry = new THREE.ConeGeometry(0.8, 1.5, 16);
     const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     experienceCone = new THREE.LineSegments(wireframeGeometry, material);
@@ -428,16 +392,11 @@ function animateExperience() {
     }
 }
 
-// Leadership Animation
-// Why an octahedron? You tell me
 function initLeadershipAnimation() {
-    console.log("Attempting to init Leadership animation");
     const leadershipAnimationCanvas = document.getElementById('leadership-animation-canvas');
     if (!leadershipAnimationCanvas) {
-        console.error("Leadership animation canvas ('leadership-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Leadership animation canvas found. Initializing scene...");
 
     leadershipScene = new THREE.Scene();
     leadershipCamera = new THREE.PerspectiveCamera(75, leadershipAnimationCanvas.clientWidth / leadershipAnimationCanvas.clientHeight, 0.1, 1000);
@@ -464,15 +423,11 @@ function animateLeadership() {
     }
 }
 
-// Interests Animation
 function initInterestsAnimation() {
-    console.log("Attempting to init Interests animation");
     const interestsAnimationCanvas = document.getElementById('interests-animation-canvas');
     if (!interestsAnimationCanvas) {
-        console.error("Interests animation canvas ('interests-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Interests animation canvas found. Initializing scene...");
 
     interestsScene = new THREE.Scene();
     interestsCamera = new THREE.PerspectiveCamera(75, interestsAnimationCanvas.clientWidth / interestsAnimationCanvas.clientHeight, 0.1, 1000);
@@ -480,7 +435,7 @@ function initInterestsAnimation() {
     interestsRenderer.setSize(interestsAnimationCanvas.clientWidth, interestsAnimationCanvas.clientHeight);
     interestsRenderer.setClearColor(0x000000, 0);
 
-    const geometry = new THREE.DodecahedronGeometry(1.0); // Radius
+    const geometry = new THREE.DodecahedronGeometry(1.0);
     const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     interestsDodecahedron = new THREE.LineSegments(wireframeGeometry, material);
@@ -500,15 +455,11 @@ function animateInterests() {
     }
 }
 
-// Contact Animation
 function initContactAnimation() {
-    console.log("Attempting to init Contact animation");
     const contactAnimationCanvas = document.getElementById('contact-animation-canvas');
     if (!contactAnimationCanvas) {
-        console.error("Contact animation canvas ('contact-animation-canvas') NOT FOUND in DOM!");
         return;
     }
-    console.log("Contact animation canvas found. Initializing scene...");
 
     contactScene = new THREE.Scene();
     contactCamera = new THREE.PerspectiveCamera(75, contactAnimationCanvas.clientWidth / contactAnimationCanvas.clientHeight, 0.1, 1000);
@@ -516,7 +467,7 @@ function initContactAnimation() {
     contactRenderer.setSize(contactAnimationCanvas.clientWidth, contactAnimationCanvas.clientHeight);
     contactRenderer.setClearColor(0x000000, 0);
 
-    const geometry = new THREE.TorusGeometry(0.8, 0.3, 12, 48); // Radius, tube, radialSegments, tubularSegments
+    const geometry = new THREE.TorusGeometry(0.8, 0.3, 12, 48);
     const material = new THREE.LineBasicMaterial({ color: 0xffffff });
     const wireframeGeometry = new THREE.WireframeGeometry(geometry);
     contactTorus = new THREE.LineSegments(wireframeGeometry, material);
@@ -536,14 +487,10 @@ function animateContact() {
     }
 }
 
-// Terminal Sequence Logic
 let terminalSequenceInitialized = false;
 
-// Window Onload
 window.onload = () => {
-  console.log("window.onload: Script execution started.");
 
-  // Assign DOM elements now that the DOM is fully loaded
   nameElement = document.getElementById('name');
   terminalOverlay = document.getElementById('terminal-sequence-overlay');
   terminalContent = document.getElementById('terminal-output');
@@ -551,33 +498,20 @@ window.onload = () => {
   loadingOverlay = document.getElementById('loading-overlay');
   mainContent = document.getElementById('main-content');
 
-  // Setup mobile menu
   setupMobileMenu();
 
-  console.log("DOM Elements after assignment:", {
-    nameElement,
-    terminalOverlay,
-    terminalContent,
-    terminalCursor,
-    loadingOverlay,
-    mainContent
-  });
 
   if (terminalOverlay && terminalContent) {
-    console.log("Terminal elements found. Starting sequence.");
     runTerminalSequence();
   } else {
-    console.warn("Terminal sequence elements not found (terminalOverlay or terminalContent is null). Falling back to direct loading screen.");
     if (loadingOverlay) {
         loadingOverlay.style.display = 'flex';
         loadingOverlay.style.opacity = '1';
     }
     try {
-        console.log("Fallback: Initializing loading sphere (initThreeJS)...", loadingOverlay);
         initThreeJS(); 
-        console.log("Fallback: Loading sphere initialized.");
     } catch (e) {
-        console.error("Fallback: Error in initThreeJS (loading sphere):", e);
+        console.error("loading sphere failed", e);
     }
     setTimeout(() => {
         const currentLoadingOverlay = loadingOverlay; 
@@ -595,38 +529,14 @@ window.onload = () => {
           currentMainContent.style.opacity = '1';
           currentMainContent.style.transform = 'translateY(0)';
         
-          console.log("Fallback: Main content revealed. Now initializing section animations.");
 
-          try {
-              if (nameElement) {
-                  console.log("Fallback: Resetting and calling typeWriter...");
-                  index = 0;
-                  isDeleting = false;
-                  typeWriter();
-                  console.log("Fallback: typeWriter call initiated.");
-              } else {
-                  console.error("Fallback: nameElement not found, cannot call typeWriter.");
-              }
-          } catch (e) {
-              console.error("Fallback: Error calling typeWriter:", e);
-          }
-
-          try { initSkillsAnimation(); } catch(e) { console.error("Error initSkillsAnimation:", e); }
-          try { initProjectsAnimation(); } catch(e) { console.error("Error initProjectsAnimation:", e); }
-          try { initEducationAnimation(); } catch(e) { console.error("Error initEducationAnimation:", e); }
-          try { initExperienceAnimation(); } catch(e) { console.error("Error initExperienceAnimation:", e); }
-          try { initLeadershipAnimation(); } catch(e) { console.error("Error initLeadershipAnimation:", e); }
-          try { initInterestsAnimation(); } catch(e) { console.error("Error initInterestsAnimation:", e); }
-          try { initContactAnimation(); } catch(e) { console.error("Error initContactAnimation:", e); }
-          try { initProjectsCarousel(); } catch(e) { console.error("Error initProjectsCarousel:", e); }
+          startSectionAnimations();
         }
     }, 1500);
   }
 
-  console.log("window.onload: Script execution finished initial setup.");
 };
 
-// Mobile menu functionality
 function setupMobileMenu() {
   const mobileMenuButton = document.getElementById('mobile-menu-button');
   const mobileMenu = document.getElementById('mobile-menu');
@@ -636,14 +546,12 @@ function setupMobileMenu() {
       mobileMenu.classList.toggle('show');
     });
     
-    // Close menu when clicking outside
     document.addEventListener('click', (e) => {
       if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
         mobileMenu.classList.remove('show');
       }
     });
     
-    // Close menu when a link is clicked
     const mobileMenuLinks = mobileMenu.querySelectorAll('a');
     mobileMenuLinks.forEach(link => {
       link.addEventListener('click', () => {
@@ -660,13 +568,11 @@ function initProjectsCarousel() {
     const carouselWrapper = document.getElementById('projects-carousel-wrapper');
 
     if (!carousel || !prevButton || !nextButton || !carouselWrapper) {
-        console.error('Carousel elements not found!');
         return;
     }
 
     let originalCards = Array.from(carousel.querySelectorAll('.project-card'));
     if (originalCards.length === 0) {
-        console.warn("No project cards found in the carousel.");
         return;
     }
 
@@ -751,24 +657,21 @@ function initProjectsCarousel() {
         updateCarousel();
     });
     
-    updateCarousel(true); // Initial positioning
+    updateCarousel(true);
 
     window.addEventListener('resize', () => {
         const newSpaceBetweenCards = parseFloat(getComputedStyle(carousel).columnGap) || (8*4);
         const newCardWidthWithMargin = originalCards[0].offsetWidth + newSpaceBetweenCards;
 
-        //Might need to fix tbh 😴
         cardWidthWithMargin = newCardWidthWithMargin;
         spaceBetweenCards = newSpaceBetweenCards;
         updateCarousel(true);
     });
 
-    console.log("Projects carousel setup complete (simplified styles).");
 }
 //Writes Gabe Shores (Who???)
 function typeWriter() {
     if (!nameElement) {
-        console.error("typeWriter: nameElement not found, cannot type.");
         return;
     }
 

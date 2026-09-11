@@ -11,7 +11,6 @@
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-  <!--Need to work to unify my css in tailwind-->
   <style>
     /* Hide content b4 animation is done */
     #main-content.hidden {
@@ -147,7 +146,7 @@
   </div>
   <div id="loading-overlay"
     class="fixed inset-0 bg-black flex flex-col justify-center items-center z-[100] transition-opacity duration-500 ease-out hidden">
-    <canvas id="bg-canvas" class="w-32 h-32 md:w-40 md:h-40 mb-6"></canvas> <!-- Canvas for the sphere -->
+    <canvas id="bg-canvas" class="w-32 h-32 md:w-40 md:h-40 mb-6"></canvas>
     <p class="text-white text-2xl md:text-3xl font-mono animate-pulse">loading...</p>
   </div>
 
@@ -197,12 +196,10 @@
   <pre id="ascii-bg"
     class="fixed inset-0 z-[-1] flex items-center justify-center text-sm md:text-3xl leading-[14px] md:leading-[24px] text-neutral-800 pointer-events-none opacity-80 overflow-hidden select-none font-mono"></pre>
 
-  <!--Placeholder text from my resume Working to replace-->
   <main id="main-content" class="container mx-auto p-4 mt-16 flex flex-col items-center hidden">
     <section id="about"
       class="p-8 mb-12 w-full max-w-4xl flex flex-col md:flex-row items-center text-center md:text-left border-b border-neutral-800 pb-12">
       <div class="md:mr-8 mb-6 md:mb-0 flex-grow">
-        <!--Cringey ?-->
         <p class="text-neutral-300 text-xl md:text-2xl leading-relaxed mb-6">
           Hi, I'm Gabe <i class="fa-solid fa-hand text-neutral-500 text-xl align-middle"></i> <br>
           M.S. Computer Science @ Indiana University | SWE Intern @ Uber | Co-Founder @ Lawgic Prep
@@ -229,7 +226,6 @@
           </a>
         </div>
       </div>
-      <!--Need to get a better headshot-->
       <img src="./assets/Picture.svg" alt="Gabe Shores"
         class="rounded-none w-36 h-36 md:w-52 md:h-52 object-contain border-none shadow-none flex-shrink-0 mt-6 md:mt-0 opacity-80 hover:opacity-100 transition-opacity duration-300">
     </section>
@@ -371,7 +367,6 @@
             <!-- New Project Card: Social Graph Anomaly Detector -->
             <div
               class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <!-- Placeholder image for now, or reuse an existing one if no specific asset provided -->
               <div
                 class="w-full h-32 md:h-40 bg-neutral-800 mb-3 flex items-center justify-center border border-neutral-700 dither-effect">
                 <i class="fas fa-project-diagram text-4xl text-neutral-400"></i>
@@ -394,7 +389,6 @@
                 </a>
               </div>
             </div>
-            <!-- Project Card 2 -->
             <div
               class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
               <img src="./assets/Eclipse.jpg" alt="Luddy Scholars’ Eclipse Team Project Image"
