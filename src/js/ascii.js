@@ -5,7 +5,7 @@
   'use strict';
 
   // Grey ramp, dimmest first. The last two are reached only under the pointer.
-  const TONES = ['#141414', '#171717', '#1b1b1b', '#1f1f1f', '#242424', '#2a2a2a'];
+  const TONES = ['#1a1a1a', '#202020', '#262626', '#2d2d2d', '#353535', '#404040'];
   const LINK_TOP = 3;
 
   // glyph, resting tone, weight
