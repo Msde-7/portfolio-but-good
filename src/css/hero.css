@@ -28,6 +28,14 @@
   white-space: nowrap;
 }
 
+/* Narrower than this a role no longer fits on one line, and holding it together
+   would push the page sideways */
+@media (max-width: 399px) {
+  .hero-line span {
+    white-space: normal;
+  }
+}
+
 .hero-name {
   margin-bottom: 0.9rem;
   font-size: clamp(1.75rem, 8.2vw, 2.5rem);

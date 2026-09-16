@@ -37,6 +37,12 @@
     section[id] {
       scroll-margin-top: 1.5rem;
     }
+
+    /* On a narrow screen the spinning shape drops under its heading rather
+       than hanging off the side of the page */
+    .sec-head {
+      flex-wrap: wrap;
+    }
   </style>
   <link rel="stylesheet" href="./css/crt.css?v=0915">
   <link rel="stylesheet" href="./css/experience.css?v=0915">
@@ -117,8 +123,8 @@
 
     <!-- Projects Section -->
     <section id="projects" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-8">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ Projects ]</h2>
+      <div class="sec-head flex items-center mb-8">
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[&nbsp;Projects&nbsp;]</h2>
         <canvas id="torus-knot-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="pj">
@@ -385,9 +391,9 @@
 
     <!-- Experience & Research Section -->
     <section id="experience" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
-            class="whitespace-nowrap">Experience &</span> Research ]</h2>
+      <div class="sec-head flex items-center mb-6">
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[&nbsp;<span
+            class="whitespace-nowrap">Experience &amp;</span> Research&nbsp;]</h2>
         <canvas id="experience-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <div class="xp-grid">
@@ -543,9 +549,9 @@
 
     <!-- Contact Section -->
     <section id="contact-section" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span class="whitespace-nowrap">Get
-            In</span> Touch ]</h2>
+      <div class="sec-head flex items-center mb-6">
+        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[&nbsp;<span class="whitespace-nowrap">Get
+            In</span> Touch&nbsp;]</h2>
         <canvas id="contact-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 text-lg mb-6 max-w-4xl">
