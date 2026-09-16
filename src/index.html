@@ -38,10 +38,14 @@
       scroll-margin-top: 1.5rem;
     }
 
-    /* On a narrow screen the spinning shape drops under its heading rather
-       than hanging off the side of the page */
-    .sec-head {
-      flex-wrap: wrap;
+    /* A phone has no room for a 30px heading and the spinning shape beside it,
+       so the heading scales down there and keeps the shape on its line */
+    @media (max-width: 767px) {
+      .sec-head h2 {
+        min-width: 0;
+        font-size: clamp(1.25rem, 5.6vw, 1.875rem);
+        line-height: 1.2;
+      }
     }
   </style>
   <link rel="stylesheet" href="./css/crt.css?v=0915">
@@ -100,9 +104,6 @@
               class="hover:text-white transition-colors">gshores@iu.edu</a></p>
           <p><i class="fas fa-globe fa-fw mr-2 text-neutral-500"></i> <a href="http://gabeshores.com" target="_blank"
               rel="noopener noreferrer" class="hover:text-white transition-colors">gabeshores.com</a></p>
-          <p><i class="fa-solid fa-file-lines fa-fw mr-2 text-neutral-500"></i> <a
-              href="./assets/Gabriel-Shores-Resume.pdf" target="_blank" rel="noopener noreferrer"
-              class="hover:text-white transition-colors">Resume (PDF)</a></p>
         </div>
         <div class="flex justify-center md:justify-start space-x-6">
           <a href="https://linkedin.com/in/gabrielshores/" target="_blank" rel="noopener noreferrer"
