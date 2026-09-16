@@ -5,14 +5,17 @@
 /* Starts at the top of the screen, so the words sit in the middle of it and
    the divider underneath lands just past the fold. The pull up cancels the
    margin and padding main puts above its first section. */
+.hero {
+  margin-top: -5rem;
+  min-height: calc(100vh + 1rem);
+  min-height: calc(100svh + 1rem);
+  justify-content: center;
+}
+
+/* Wide enough for the words and the picture to sit side by side, reading as one
+   block in the middle of the screen rather than one pinned to each edge */
 @media (min-width: 768px) {
   .hero {
-    margin-top: -5rem;
-    min-height: calc(100vh + 1rem);
-    min-height: calc(100svh + 1rem);
-    /* The words and the picture read as one block in the middle of the screen,
-       rather than one pinned to each edge */
-    justify-content: center;
     gap: 3rem;
   }
 }

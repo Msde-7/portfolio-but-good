@@ -349,6 +349,15 @@ function initProjectBrowser() {
         window.scrollBy(0, row.getBoundingClientRect().top - before);
     }
 
+    // A pane is open from the start beside the list, but on a phone that would
+    // push the rest of the projects down before anyone asked for it
+    function sync() {
+        if (!wide.matches) open(null);
+        else if (!rows.some((r) => r.getAttribute('aria-expanded') === 'true')) open(rows[0]);
+    }
+    sync();
+    wide.addEventListener('change', sync);
+
     rows.forEach((row, i) => {
         row.addEventListener('click', () => toggle(row));
 
