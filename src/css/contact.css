@@ -1,0 +1,77 @@
+/* Say Hello. The plane winds back, flies off the button with a dashed trail,
+   and the mail app opens as it leaves. */
+
+.send-icon {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.6rem;
+}
+
+/* Difference blending keeps the plane visible on the white button, the black
+   hover state and the page once it is out */
+.send-plane,
+.send-trail {
+  mix-blend-mode: difference;
+}
+
+.send-plane {
+  display: inline-block;
+  color: #fff;
+  transition: transform 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.send-btn:hover .send-plane {
+  transform: translate(3px, -3px);
+}
+
+.send-trail {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 0;
+  height: 2px;
+  background: repeating-linear-gradient(90deg, #fff 0 6px, transparent 6px 11px);
+  transform: rotate(-33.7deg);
+  transform-origin: 0 50%;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.send-btn.is-sending .send-plane {
+  animation: send-fly 0.75s cubic-bezier(0.5, 0, 0.75, 0) forwards;
+}
+
+.send-btn.is-sending .send-trail {
+  animation:
+    send-trail-grow 0.75s cubic-bezier(0.5, 0, 0.75, 0) forwards,
+    send-trail-fade 0.9s linear forwards;
+}
+
+.send-btn.is-returning .send-plane {
+  animation: send-return 0.45s cubic-bezier(0.2, 0.8, 0.2, 1) both;
+}
+
+@keyframes send-fly {
+  0% { transform: none; opacity: 1; }
+  18% { transform: translate(-6px, 4px) rotate(-12deg); opacity: 1; }
+  100% { transform: translate(180px, -120px) rotate(8deg) scale(0.5); opacity: 0; }
+}
+
+/* Same easing and breakpoints as the flight, so the trail keeps up */
+@keyframes send-trail-grow {
+  0% { width: 0; }
+  18% { width: 0; }
+  100% { width: 216px; }
+}
+
+@keyframes send-trail-fade {
+  0% { opacity: 0; }
+  20% { opacity: 0.9; }
+  60% { opacity: 0.7; }
+  100% { opacity: 0; }
+}
+
+@keyframes send-return {
+  from { transform: translate(-22px, 10px); opacity: 0; }
+  to { transform: none; opacity: 1; }
+}

@@ -28,112 +28,26 @@
       transition: opacity 0.5s ease-out, transform 0.5s ease-out;
     }
 
-    /* Improved navigation buttons for mobile */
-    @media (max-width: 640px) {
-
-      #prev-project,
-      #next-project {
-        width: 10px !important;
-        height: 10px !important;
-        transform: translateY(-50%) !important;
-      }
-
-      #prev-project {
-        left: -5px !important;
-      }
-
-      #next-project {
-        right: -5px !important;
-      }
-    }
-
-    /* Initial hide for loading overlay */
-    #loading-overlay.hidden {
-      display: none;
-      opacity: 0;
-    }
-
-    #loading-overlay {
-      opacity: 0;
-      /* Start hidden */
-      transition: opacity 0.5s ease-in;
-      /* Transition for showing */
-    }
-
-    /* Utility to hide scrollbar */
-    .scrollbar-hide::-webkit-scrollbar {
-      display: none;
-    }
-
-    .scrollbar-hide {
-      -ms-overflow-style: none;
-      /* IE and Edge */
-      scrollbar-width: none;
-      /* Firefox */
-    }
-
     /* Smooth scrolling for anchor links */
     html {
       scroll-behavior: smooth;
     }
 
-    /* Offset for sticky header */
+    /* Room above a section when jumping to it */
     section[id] {
-      scroll-margin-top: 80px;
-    }
-
-    /* Mobile Menu Styles */
-    .mobile-menu-container {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .desktop-menu {
-        display: none;
-      }
-
-      .mobile-menu-container {
-        display: block;
-      }
-
-      .mobile-menu {
-        position: absolute;
-        top: 100%;
-        left: 0;
-        right: 0;
-        background-color: #000000;
-        border-bottom: 1px solid #262626;
-        width: 100%;
-        z-index: 50;
-        box-shadow: none;
-        transform: translateY(-10px);
-        opacity: 0;
-        visibility: hidden;
-        transition: transform 0.2s, opacity 0.2s, visibility 0.2s;
-      }
-
-      .mobile-menu.show {
-        transform: translateY(0);
-        opacity: 1;
-        visibility: visible;
-      }
-
-      .mobile-menu a {
-        display: block;
-        padding: 0.75rem 1.5rem;
-        border-bottom: 1px solid #262626;
-        text-align: center;
-      }
-
-      .mobile-menu a:last-child {
-        border-bottom: none;
-      }
+      scroll-margin-top: 1.5rem;
     }
   </style>
-  <link rel="stylesheet" href="./css/crt.css">
+  <link rel="stylesheet" href="./css/crt.css?v=0915">
+  <link rel="stylesheet" href="./css/experience.css?v=0915">
+  <link rel="stylesheet" href="./css/projects.css?v=0915">
+  <link rel="stylesheet" href="./css/github.css?v=0915">
+  <link rel="stylesheet" href="./css/contact.css?v=0915">
+  <link rel="stylesheet" href="./css/sisyphus.css?v=0915">
+  <link rel="stylesheet" href="./css/hero.css?v=0915">
 </head>
 
-<body class="bg-[#0a0a0a] text-neutral-200 font-mono selection:bg-neutral-200 selection:text-black">
+<body class="bg-black text-neutral-200 font-mono selection:bg-neutral-200 selection:text-black">
   <div id="terminal-sequence-overlay">
     <canvas id="crt-scene"></canvas>
     <!-- The terminal lives here and is painted onto the tube in the scene -->
@@ -144,53 +58,14 @@
     <div class="crt-grade crt-grade-vignette"></div>
     <div class="crt-grade crt-grade-grain"></div>
   </div>
-  <div id="loading-overlay"
-    class="fixed inset-0 bg-black flex flex-col justify-center items-center z-[100] transition-opacity duration-500 ease-out hidden">
-    <canvas id="bg-canvas" class="w-32 h-32 md:w-40 md:h-40 mb-6"></canvas>
-    <p class="text-white text-2xl md:text-3xl font-mono animate-pulse">loading...</p>
-  </div>
 
-  <header class="bg-black/90 backdrop-blur-sm sticky top-0 z-50 border-b border-neutral-800">
-    <div class="container mx-auto flex justify-between items-center p-4 relative">
-      <h1 class="text-2xl text-white"><span id="name"></span><span class="animate-pulse">_</span></h1>
-
-      <!-- Desktop Navigation -->
-      <nav class="desktop-menu">
-        <ul class="flex space-x-4 md:space-x-6">
-          <li><a href="#about"
-              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ About
-              ]</a></li>
-          <li><a href="#projects"
-              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Projects
-              ]</a></li>
-          <li><a href="#education"
-              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Resume
-              ]</a></li>
-          <li><a href="#contact-section"
-              class="text-neutral-400 hover:text-white transition-colors duration-200 text-sm md:text-base">[ Contact
-              ]</a></li>
-        </ul>
-      </nav>
-
-      <!-- Mobile Navigation -->
-      <div class="mobile-menu-container">
-        <button id="mobile-menu-button"
-          class="text-white hover:text-neutral-400 transition-colors duration-200 text-2xl focus:outline-none p-1">
-          <i class="fas fa-bars"></i>
-        </button>
-        <div id="mobile-menu" class="mobile-menu bg-black border-b border-neutral-800">
-          <a href="#about" class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[
-            About ]</a>
-          <a href="#projects"
-            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Projects ]</a>
-          <a href="#education"
-            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Resume ]</a>
-          <a href="#contact-section"
-            class="text-neutral-400 hover:text-white transition-colors duration-200 border-neutral-800">[ Contact ]</a>
-        </div>
-      </div>
-    </div>
-  </header>
+  <nav class="rail" aria-label="Section index">
+    <a href="#about"><span>about</span></a>
+    <a href="#projects"><span>projects</span></a>
+    <a href="#experience"><span>experience</span></a>
+    <a href="#contact-section"><span>contact</span></a>
+  </nav>
+  <button class="to-top" type="button" aria-label="Back to top"><i class="fas fa-arrow-up"></i></button>
 
   <!-- Fixed Background ASCII -->
   <pre id="ascii-bg"
@@ -198,12 +73,22 @@
 
   <main id="main-content" class="container mx-auto p-4 mt-16 flex flex-col items-center hidden">
     <section id="about"
-      class="p-8 mb-12 w-full max-w-4xl flex flex-col md:flex-row items-center text-center md:text-left border-b border-neutral-800 pb-12">
-      <div class="md:mr-8 mb-6 md:mb-0 flex-grow">
-        <p class="text-neutral-300 text-xl md:text-2xl leading-relaxed mb-6">
-          Hi, I'm Gabe <i class="fa-solid fa-hand text-neutral-500 text-xl align-middle"></i> <br>
-          M.S. Computer Science @ Indiana University | SWE Intern @ Uber | Co-Founder @ Lawgic Prep
+      class="hero p-8 mb-12 w-full max-w-4xl flex flex-col md:flex-row items-center text-center md:text-left border-b border-neutral-800 pb-12">
+      <div class="hero-copy mb-6 md:mb-0">
+        <h1 class="hero-name" aria-label="Hi, I'm Gabe"><span id="name"></span><span class="hero-wave" hidden><i
+            class="fa-solid fa-hand"></i></span><span class="hero-caret">_</span></h1>
+        <p class="hero-line text-neutral-300 text-lg md:text-xl leading-relaxed mb-4">
+          <span>Computer Science and Math @ IU '27 |</span>
+          <span>SWE Intern @ Uber |</span>
+          <span>Co-Founder @ Lawgic Prep</span>
         </p>
+        <nav class="hero-nav" aria-label="Sections">
+          <span class="hero-prompt">$ ls</span>
+          <a href="#projects">projects/</a>
+          <a href="#experience">experience/</a>
+          <a href="#contact-section">contact/</a>
+          <a href="./assets/Gabriel-Shores-Resume.pdf" target="_blank" rel="noopener noreferrer">resume.pdf</a>
+        </nav>
         <div class="text-sm text-neutral-400 mb-6 space-y-2 text-left">
           <p><i class="fas fa-envelope fa-fw mr-2 text-neutral-500"></i> <a href="mailto:gshores@iu.edu"
               class="hover:text-white transition-colors">gshores@iu.edu</a></p>
@@ -236,230 +121,264 @@
         <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ Projects ]</h2>
         <canvas id="torus-knot-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
-      <div class="relative">
-        <div id="projects-carousel-wrapper"
-          class="overflow-hidden [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]">
-          <div id="projects-carousel" class="flex space-x-8 pb-4 transition-transform duration-500 ease-in-out">
-            <!-- Lawgic Prep Card -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <img src="./assets/Lawgic.png" alt="Lawgic Prep"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate" title="Lawgic Prep">
-                Lawgic Prep</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                <li>Co-Founder & SWE. Official LSAC Licensee.</li>
-                <li>Real-time admissions chances for 70k+ users.</li>
-                <li>Built with modern web tech handling 900k+ applications data.</li>
-                <li><a href="https://lawgicprep.org" target="_blank"
-                    class="text-neutral-300 hover:underline">lawgicprep.org</a></li>
+      <div class="pj">
+        <div class="pj-bar"><span><b>$</b> ls ~/projects</span><span>10 items</span></div>
+        <div class="pj-grid" style="--n: 10">
+          <button class="pj-row" type="button" aria-expanded="true" aria-controls="pj-lawgic">
+            <span class="pj-idx">01</span>
+            <span class="pj-name">Lawgic Prep</span>
+            <span class="pj-sub">Gamified LSAT practice, official LSAC licensee</span>
+          </button>
+          <div class="pj-pane is-open" id="pj-lawgic">
+            <div class="pj-shot"><img src="./assets/Lawgic.jpg" alt="Lawgic Prep landing page"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 11">Lawgic Prep</h3>
+              <ul class="xp-points">
+                <li>Co-Founder and software engineer. Gamified LSAT practice and an official LSAC licensee, one of under 100 worldwide.</li>
+                <li>Built in React, JavaScript, Python, Google Cloud, and Stripe with an AI essay grader and 900K+ applications of admissions data.</li>
+                <li>Firebase backend serving over 6,000 questions across 58 tests with real-time analytics.</li>
               </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://lawgicprep.org" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="Live Demo">
-                  <i class="fas fa-external-link-alt fa-lg"></i>
-                </a>
+              <div class="xp-foot">
+                <span>React</span>
+                <span>JavaScript</span>
+                <span>Firebase</span>
+                <span>Python</span>
+                <span>Google Cloud</span>
+                <span>Stripe</span>
               </div>
-            </div>
-
-            <!-- Worldsmith Card -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <img src="./assets/Worldsmith.png" alt="Worldsmith terrain renders"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate" title="Worldsmith">
-                Worldsmith</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>Natural language Minecraft terrain generator. Vanilla world generation reimplemented in Python,
-                  bit for bit.</li>
-                <li>An agent writes the density functions, renders the result, looks at the picture, and tunes the
-                  numbers.</li>
-                <li>Also builds castles, towers, and ruins from block templates. Ships as a Claude Code skill with 482
-                  passing tests.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/worldsmith" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- Distributed Crypto Limit Order Book Card -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <img src="./assets/CryptoLOB.jpg" alt="Limit order book and incremental update processing"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 invert hue-rotate-180 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate"
-                title="Distributed Crypto Limit Order Book Pipeline">Distributed Order Book</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>Dockerized Kafka to Spark pipeline reconstructing live order books at 50k+ events per second.</li>
-                <li>Concurrent Python ingestion normalizing Binance, Coinbase, and Kraken websockets into one schema.
-                </li>
-                <li>Benchmarked on Jetstream2 with scaling sweeps and worker-kill fault injection. Judged best of
-                  roughly 30 projects in the class.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/distributed-crypto-lob" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- New Project Card for Research -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <img src="./assets/Research.png" alt="Undergraduate Research Project Image"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate"
-                title="Undergraduate Research - PhysiCell">
-                PhysiCell Research</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>Contributing to the open-source PhysiCell project, a cell-simulation software.</li>
-                <li>Optimizes diffusion equations using numerical analysis and partial differential equations to model
-                  nutrient transport.</li>
-                <li>Applying high-level math in Python and C++ to improve simulation speeds by up to 1000%.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/MathCancer/PhysiCell" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-                <a href="http://physicell.org/" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="Website">
-                  <i class="fas fa-external-link-alt fa-lg"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Project Card 1: EduAdvisor AI -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <img src="./assets/Scheduling Bot.png" alt="EduAdvisor AI Project Image"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate"
-                title="EduAdvisor AI - Indiana University AI Course Scheduler">EduAdvisor AI</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>Developed a full-stack, AI-powered course planning app using React, Tailwind, Vite, Flask, and the
-                  Gemini API.</li>
-                <li>Processed 100k+ records spanning over 8 years with NumPy and Pandas for more data-driven scheduling.
-                </li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/scheduler-deployment" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-              </div>
-            </div>
-
-            <!-- New Project Card: Social Graph Anomaly Detector -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-neutral-400 transition-colors duration-300">
-              <div
-                class="w-full h-32 md:h-40 bg-neutral-800 mb-3 flex items-center justify-center border border-neutral-700 dither-effect">
-                <i class="fas fa-project-diagram text-4xl text-neutral-400"></i>
-              </div>
-              <h3 class="text-lg font-semibold text-neutral-100 mb-2 truncate" title="Social Graph Anomaly Detector">
-                Social Graph Anomaly Detector</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>ML tool turns synthetic or Reddit/Twitter API data into graphs, flagging bots with IsolationForest
-                  for
-                  safety.</li>
-                <li>Python Streamlit app with Pandas, NetworkX, scikit-learn, PyVis detecting anomalies in 5k+ social
-                  graphs.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/graph-anomaly-detector" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-              </div>
-            </div>
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
-              <img src="./assets/Eclipse.jpg" alt="Luddy Scholars’ Eclipse Team Project Image"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Luddy Scholars’ Eclipse Team">Luddy
-                Eclipse Project</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar mb-4">
-                <li>Integrated OBS, NDI, and networking technologies to capture and stream live footage of the Great
-                  American Solar Eclipse, reaching over 3,000 online viewers and over 5,000 viewers at live events.</li>
-                <li>Collaborated with peers to engage over 200 elementary school students via outreach programs.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://www.youtube.com/live/P9M_e3JJHZA?si=J07CNKmM7HrXZDqs" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="Watch Stream">
-                  <i class="fab fa-youtube fa-lg"></i>
-                </a>
-              </div>
-            </div>
-            <!-- Java Neural Network Project Card -->
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
-              <img src="./assets/Java Neural Network.jpg" alt="Java Neural Network Project Image"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Java Neural Network">Java Neural Network
-              </h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                <li>A neural network, perceptron, made fully in pure Java.</li>
-                <li>Able to score 95%+ on MNIST digit recognition.</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/JavaNeuralNetwork" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
-              </div>
-            </div>
-            <div
-              class="project-card flex flex-col flex-shrink-0 w-64 md:w-72 bg-[#111111] border border-neutral-800 rounded-none p-4 hover:border-white transition-colors duration-300">
-              <img src="./assets/Fintech Bot.png" alt="Fintech Discord Bot"
-                class="w-full h-32 md:h-40 object-cover rounded-none mb-3 transition-all duration-300">
-              <h3 class="text-lg font-semibold text-white mb-2 truncate" title="Fintech Discord Bot">Fintech Club
-                Discord Bot</h3>
-              <ul
-                class="list-disc list-inside text-neutral-400 pl-1 space-y-1 text-xs leading-relaxed h-40 overflow-y-auto custom-scrollbar">
-                <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs.</li>
-                <li>Developed dynamic and interactive bots allowing members to view and engage with the club's market
-                  fund</li>
-              </ul>
-              <div class="flex space-x-4 mt-auto">
-                <a href="https://github.com/Msde-7/FintechBot" target="_blank"
-                  class="text-neutral-500 hover:text-white transition-colors duration-300 transform hover:scale-110"
-                  title="GitHub">
-                  <i class="fab fa-github fa-lg"></i>
-                </a>
+              <div class="pj-links">
+                <a href="https://lawgicprep.org" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i>lawgicprep.org</a>
               </div>
             </div>
           </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-riley">
+            <span class="pj-idx">02</span>
+            <span class="pj-name">Riley <i class="fa-solid fa-trophy pj-award" title="1st place"></i></span>
+            <span class="pj-sub">Family AI agent, 1st place at YC hackathon</span>
+          </button>
+          <div class="pj-pane" id="pj-riley">
+            <div class="pj-shot"><img src="./assets/Riley.jpg" alt="Riley landing page" style="object-position: top"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 5">Riley</h3>
+              <ul class="xp-points">
+                <li>Won 1st place for Best Use of Browser Use at the YC Call My Agent Hackathon and took home AirPods Max.</li>
+                <li>One phone number for the whole family. Text it to check grades, manage calendars, approve spending, and relay messages.</li>
+                <li>Built in 12 hours with FastAPI, OpenAI tool calling, Browser Use cloud browsers, and Sponge payments on Solana.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>Python</span>
+                <span>FastAPI</span>
+                <span>OpenAI</span>
+                <span>Browser Use</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://rileyapp.vercel.app/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i>rileyapp.vercel.app</a>
+                <a href="https://github.com/FuJacob/yc" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-worldsmith">
+            <span class="pj-idx">03</span>
+            <span class="pj-name">Worldsmith</span>
+            <span class="pj-sub">Minecraft terrain and builds from a prompt</span>
+          </button>
+          <div class="pj-pane" id="pj-worldsmith">
+            <div class="pj-shot"><img src="./assets/Worldsmith.png" alt="Worldsmith terrain renders"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 10">Worldsmith</h3>
+              <ul class="xp-points">
+                <li>Natural language Minecraft terrain generator. Vanilla world generation reimplemented in Python, bit for bit.</li>
+                <li>An agent writes the density functions, renders the result, looks at the picture, and tunes the numbers.</li>
+                <li>Places whatever you describe on that ground, a hut, a lighthouse, a broken bridge or a castle, from a block grid with a shapes library for walls, towers, roofs and stairs.</li>
+                <li>Ships as a Claude Code skill with 482 passing tests, and installs the finished world into your saves folder ready to walk into.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>Python</span>
+                <span>Claude Code</span>
+                <span>Minecraft</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/worldsmith" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-lob">
+            <span class="pj-idx">04</span>
+            <span class="pj-name">Distributed Order Book</span>
+            <span class="pj-sub">Live crypto order books at 50k+ events/s</span>
+          </button>
+          <div class="pj-pane" id="pj-lob">
+            <div class="pj-shot"><img src="./assets/CryptoLOB.jpg" alt="Limit order book and incremental update processing" class="pj-invert pj-contain"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 22">Distributed Order Book</h3>
+              <ul class="xp-points">
+                <li>Dockerized Kafka to Spark pipeline reconstructing live order books at 50k+ events per second.</li>
+                <li>Concurrent Python ingestion normalizing Binance, Coinbase, and Kraken websockets into one schema.</li>
+                <li>Benchmarked on Jetstream2 with scaling sweeps and worker-kill fault injection. Judged best of roughly 30 projects in the class.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>Kafka</span>
+                <span>Spark</span>
+                <span>Docker</span>
+                <span>Python</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/distributed-crypto-lob" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-physicell">
+            <span class="pj-idx">05</span>
+            <span class="pj-name">PhysiCell Research</span>
+            <span class="pj-sub">Generalized diffusion solvers for cell simulation</span>
+          </button>
+          <div class="pj-pane" id="pj-physicell">
+            <div class="pj-shot"><img src="./assets/Research.png" alt="PhysiCell diffusion solver research poster" style="object-position: top"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 18">PhysiCell Research</h3>
+              <ul class="xp-points">
+                <li>Contributing to the open-source PhysiCell project, a cell-simulation software.</li>
+                <li>Solved diffusion with numerical analysis in Python and C++, cutting complexity from O(n³) to O(n).</li>
+                <li>Parallelized routines with CUDA and OpenMP, speeding up large-scale simulations by over 300%.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>C++</span>
+                <span>Python</span>
+                <span>CUDA</span>
+                <span>OpenMP</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/MathCancer/PhysiCell" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+                <a href="http://physicell.org/" target="_blank" rel="noopener noreferrer"><i class="fas fa-arrow-up-right-from-square"></i>physicell.org</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-eduadvisor">
+            <span class="pj-idx">06</span>
+            <span class="pj-name">EduAdvisor AI</span>
+            <span class="pj-sub">AI course planner for Indiana University</span>
+          </button>
+          <div class="pj-pane" id="pj-eduadvisor">
+            <div class="pj-shot"><img src="./assets/Scheduling Bot.png" alt="EduAdvisor AI course planning chat"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 13">EduAdvisor AI</h3>
+              <ul class="xp-points">
+                <li>Developed a full-stack, AI-powered course planning app using React, Tailwind, Vite, Flask, and the Gemini API.</li>
+                <li>Processed 100k+ records spanning over 8 years with NumPy and Pandas for more data-driven scheduling.</li>
+                <li>Students plan by chatting with it. Built with a team at a hackathon and deployed for anyone to try.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>React</span>
+                <span>Flask</span>
+                <span>Gemini API</span>
+                <span>Pandas</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/scheduler-deployment" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-graph">
+            <span class="pj-idx">07</span>
+            <span class="pj-name">Social Graph Anomaly Detector</span>
+            <span class="pj-sub">Flags suspicious accounts in social graphs</span>
+          </button>
+          <div class="pj-pane" id="pj-graph">
+            <div class="pj-shot"><img src="./assets/GraphAnomaly.svg" alt="Social graph with one anomalous node flagged"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 29">Social Graph Anomaly Detector</h3>
+              <ul class="xp-points">
+                <li>ML pipeline flagging suspicious accounts with IsolationForest over PageRank and Louvain features.</li>
+                <li>Ingests live Reddit and X graphs, scores precision, recall and F1, and shows the result in an interactive PyVis app.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>Python</span>
+                <span>scikit-learn</span>
+                <span>NetworkX</span>
+                <span>PyVis</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/graph-anomaly-detector" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-eclipse">
+            <span class="pj-idx">08</span>
+            <span class="pj-name">Luddy Eclipse Project</span>
+            <span class="pj-sub">Live stream of the Great American Solar Eclipse</span>
+          </button>
+          <div class="pj-pane" id="pj-eclipse">
+            <div class="pj-shot"><img src="./assets/Eclipse.jpg" alt="Luddy Scholars eclipse stream and outreach"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 21">Luddy Eclipse Project</h3>
+              <ul class="xp-points">
+                <li>Integrated OBS, NDI, and networking technologies to capture and stream live footage of the Great American Solar Eclipse, reaching over 3,000 online viewers and over 5,000 viewers at live events.</li>
+                <li>Collaborated with peers to engage over 200 elementary school students via outreach programs.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>OBS</span>
+                <span>NDI</span>
+                <span>Networking</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://www.youtube.com/live/P9M_e3JJHZA?si=J07CNKmM7HrXZDqs" target="_blank" rel="noopener noreferrer"><i class="fab fa-youtube"></i>Watch stream</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-javann">
+            <span class="pj-idx">09</span>
+            <span class="pj-name">Java Neural Network</span>
+            <span class="pj-sub">Perceptron in pure Java, 99%+ on MNIST</span>
+          </button>
+          <div class="pj-pane" id="pj-javann">
+            <div class="pj-shot"><img src="./assets/Java Neural Network.jpg" alt="Neural network diagram" class="pj-invert pj-contain"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 19">Java Neural Network</h3>
+              <ul class="xp-points">
+                <li>A neural network, perceptron, made fully in pure Java.</li>
+                <li>Able to score over 99% on MNIST digit recognition.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>Java</span>
+                <span>MNIST</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/JavaNeuralNetwork" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <button class="pj-row" type="button" aria-expanded="false" aria-controls="pj-fintechbot">
+            <span class="pj-idx">10</span>
+            <span class="pj-name">Fintech Club Discord Bot</span>
+            <span class="pj-sub">Market fund bot for the Fintech club</span>
+          </button>
+          <div class="pj-pane" id="pj-fintechbot">
+            <div class="pj-shot"><img src="./assets/Fintech Bot.png" alt="Fintech Discord bot stock info message" style="object-position: top"></div>
+            <div class="pj-body">
+              <h3 class="pj-title" style="--len: 24">Fintech Club Discord Bot</h3>
+              <ul class="xp-points">
+                <li>Built and deployed a Javascript and SQL app interfacing with Discord and trading REST APIs.</li>
+                <li>Developed dynamic and interactive bots allowing members to view and engage with the club's market fund.</li>
+              </ul>
+              <div class="xp-foot">
+                <span>JavaScript</span>
+                <span>SQL</span>
+                <span>Discord API</span>
+              </div>
+              <div class="pj-links">
+                <a href="https://github.com/Msde-7/FintechBot" target="_blank" rel="noopener noreferrer"><i class="fab fa-github"></i>GitHub</a>
+              </div>
+            </div>
+          </div>
+          <p class="pj-hint">// hover a project to preview</p>
         </div>
-        <!-- Navigation Buttons -->
-        <button id="prev-project"
-          class="absolute left-0 top-1/2 -translate-y-1/2 transform -translate-x-4 md:-translate-x-6 bg-black border border-white hover:bg-white hover:text-black text-white p-3 rounded-full z-10 shadow-none transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 w-12 h-12 flex items-center justify-center">
-          <i class="fas fa-chevron-left fa-lg"></i>
-        </button>
-        <button id="next-project"
-          class="absolute right-0 top-1/2 -translate-y-1/2 transform translate-x-4 md:translate-x-6 bg-black border border-white hover:bg-white hover:text-black text-white p-3 rounded-full z-10 shadow-none transition-all duration-300 ease-in-out focus:outline-none focus:ring-0 w-12 h-12 flex items-center justify-center">
-          <i class="fas fa-chevron-right fa-lg"></i>
-        </button>
+      </div>
+      <div class="gh-block">
+        <p class="gh-head">GitHub</p>
+        <a class="gh-chart" href="https://github.com/Msde-7" target="_blank" rel="noopener noreferrer">
+          <img src="https://ghchart.rshah.org/000000/Msde-7" alt="GitHub contribution chart for Msde-7">
+          <p>github.com/Msde-7 <i class="fas fa-arrow-up-right-from-square"></i></p>
+        </a>
       </div>
     </section>
 
@@ -470,215 +389,145 @@
             class="whitespace-nowrap">Experience &</span> Research ]</h2>
         <canvas id="experience-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
-      <div class="space-y-8">
-        <div>
-          <h3 class="text-xl font-semibold text-white">Uber</h3>
-          <p class="text-neutral-400 italic">Software Engineering Intern</p>
-          <p class="text-neutral-500 text-sm">May 2026 – August 2026</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Owned a system end to end tracking 160+ reliability metrics, improving observability and catching
-              regressions before they shipped.</li>
-            <li>Built Claude AI agent tools and integrations that streamlined developer workflows, cutting flagged
-              issues by 90%.</li>
-            <li>Developed backend services on Fares, a Tier-0 system serving millions of riders and drivers, in Java,
-              Python, and Go.</li>
+      <div class="xp-grid">
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/uber.svg" alt="Uber logo" class="xp-wordmark"></div>
+          <div class="xp-head">
+            <p class="xp-when">May 2026 – Aug 2026</p>
+            <h3 class="xp-title">Uber</h3>
+            <p class="xp-role">Software Engineering Intern</p>
+          </div>
+          <ul class="xp-points">
+            <li>Owned a system end to end tracking over one hundred reliability metrics, improving observability and catching regressions before they shipped.</li>
+            <li>Built Claude AI agent tools and integrations that streamlined developer workflows, cutting flagged issues by 90%.</li>
+            <li>Developed backend services on Fares, a Tier-0 system serving millions of riders and drivers, in Java, Python, and Go.</li>
           </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Allied Solutions</h3>
-          <p class="text-neutral-400 italic">Software Engineering Intern</p>
-          <p class="text-neutral-500 text-sm">May 2025 – August 2025</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Automated manual document processing, saving over $64,000 annually in labor, by building an
-              event-driven,
-              cloud-native system with AWS Lambda, DynamoDB, API Gateway, REST APIs, and S3 storage buckets.</li>
-            <li>Improved performance for a high-traffic legacy system, used by over 1,000 financial institutions, by
-              modernizing C# .NET code and writing SQL Server scripts with AI-assisted development (Cursor) in an Agile
-              team.</li>
-            <li>Contributed to sprint planning, testing, CI/CD pipelines, and thorough code reviews to ensure reliable
-              delivery.</li>
+          <div class="xp-foot">
+            <span>Java</span>
+            <span>Python</span>
+            <span>Go</span>
+            <span>AI agents</span>
+          </div>
+        </article>
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/allied.png" alt="Allied Solutions logo"></div>
+          <div class="xp-head">
+            <p class="xp-when">May 2025 – Aug 2025</p>
+            <h3 class="xp-title">Allied Solutions</h3>
+            <p class="xp-role">Software Engineering Intern</p>
+          </div>
+          <ul class="xp-points">
+            <li>Engineered a serverless AWS document pipeline with Lambda, DynamoDB, and API Gateway, saving $64,000+ annually.</li>
+            <li>Modernized legacy C# .NET and SQL Server code, improving performance for a database serving 1,000+ banks.</li>
           </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Lawgic Prep</h3>
-          <p class="text-neutral-400 italic">Software Engineer, Co-Founder</p>
-          <p class="text-neutral-500 text-sm">November 2024 – Present</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Secured a rare official LSAC license, one of under 100 worldwide, enabling redistribution of official
-              test material.</li>
-            <li>Built an EdTech platform in React, Python, Google Cloud, and Stripe with an AI essay grader and 900K+
-              applications of admissions data.</li>
-            <li>Serve over 6,000 questions across 58 tests with real-time analytics on Firestore and Cloud
-              Functions.</li>
-            <li><a href="https://lawgicprep.org" target="_blank" class="text-white hover:underline">lawgicprep.org</a>
-            </li>
+          <div class="xp-foot">
+            <span>AWS Lambda</span>
+            <span>DynamoDB</span>
+            <span>API Gateway</span>
+            <span>C# .NET</span>
+            <span>SQL Server</span>
+          </div>
+        </article>
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/lawgic.png" alt="Lawgic Prep logo"></div>
+          <div class="xp-head">
+            <p class="xp-when">Nov 2024 – Present</p>
+            <h3 class="xp-title">Lawgic Prep</h3>
+            <p class="xp-role">Software Engineer, Co-Founder</p>
+          </div>
+          <ul class="xp-points">
+            <li>Secured a rare official LSAC license, one of under 100 worldwide, and negotiated pre-law sponsorships for early adoption.</li>
+            <li>Built an EdTech platform in React, JavaScript, Python, Google Cloud, and Stripe with an AI essay grader and 900K+ applications of admissions data.</li>
+            <li>Serve over 6,000 questions across 58 tests with real-time analytics on Firestore and Cloud Functions.</li>
           </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Indiana University Advising and Major Explorations Services</h3>
-          <p class="text-neutral-400 italic">Peer Academic Coach, Data Analyst</p>
-          <p class="text-neutral-500 text-sm">August 2023 – Present</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Raised advising service usage by 40%+ with Tableau, Excel, and Python analysis, presenting at a
-              symposium.</li>
-            <li>Collaborated with advisors to assist students with scheduling, academic, and general college needs.</li>
+          <div class="xp-foot">
+            <span>React</span>
+            <span>JavaScript</span>
+            <span>Firebase</span>
+            <span>Python</span>
+            <span>Google Cloud</span>
+            <span>Stripe</span>
+            <a href="https://lawgicprep.org" target="_blank" rel="noopener noreferrer" class="xp-link">lawgicprep.org <i
+                class="fa-solid fa-arrow-up-right-from-square"></i></a>
+          </div>
+        </article>
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/iu.svg" alt="Indiana University trident"></div>
+          <div class="xp-head">
+            <p class="xp-when">Aug 2023 – Present</p>
+            <h3 class="xp-title">Indiana University Advising and Major Explorations Services</h3>
+            <p class="xp-role">Peer Academic Coach, Data Analyst</p>
+          </div>
+          <ul class="xp-points">
+            <li>Raised advising service usage using Tableau, Excel, and Python analysis, presented at a campus symposium.</li>
+            <li>Advise students one on one, helping them build class schedules, plan their degrees, and work through academic questions.</li>
           </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">LEMMA Research Lab</h3>
-          <p class="text-neutral-400 italic">Undergraduate Researcher</p>
-          <p class="text-neutral-500 text-sm">August 2025 – Present</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Developed computational experiments in Python and C++ to study convex geometry and geometric
-              probability.</li>
-            <li>Designed convex hull and point-inclusion algorithms using probabilistic theorems for geometric
-              computation.</li>
+          <div class="xp-foot">
+            <span>Tableau</span>
+            <span>Excel</span>
+            <span>Python</span>
+          </div>
+        </article>
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/lemma.svg" alt="Convex hull mark for LEMMA"></div>
+          <div class="xp-head">
+            <p class="xp-when">Aug 2025 – Present</p>
+            <h3 class="xp-title">LEMMA Research Lab</h3>
+            <p class="xp-role">Undergraduate Researcher</p>
+          </div>
+          <ul class="xp-points">
+            <li>Developed computational experiments in Python and C++ to study convex geometry and geometric probability.</li>
+            <li>Designed convex hull and point-inclusion algorithms using probabilistic theorems for geometric computation.</li>
           </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Math Cancer Research Lab, PhysiCell Project</h3>
-          <p class="text-neutral-400 italic">Undergraduate Researcher & Open-Source Contributor</p>
-          <p class="text-neutral-500 text-sm">August 2024 – December 2025</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Profiled and optimized multi-threaded C++ on Linux, cutting simulation runtime 3x through cache-aware
-              tuning.</li>
-            <li>Implemented numerical PDE solvers and statistical algorithms in C++ and Python for large-scale
-              biological models.</li>
+          <div class="xp-foot">
+            <span>Python</span>
+            <span>C++</span>
+            <span>Geometry</span>
+          </div>
+        </article>
+        <article class="xp-card">
+          <div class="xp-fx"><span class="xp-scan"></span></div>
+          <div class="xp-logo"><img src="./assets/logos/physicell.png" alt="PhysiCell logo" class="xp-badge"></div>
+          <div class="xp-head">
+            <p class="xp-when">Aug 2024 – Dec 2025</p>
+            <h3 class="xp-title">Math Cancer Research Lab, PhysiCell Project</h3>
+            <p class="xp-role">Undergraduate Researcher &amp; Open-Source Contributor</p>
+          </div>
+          <ul class="xp-points">
+            <li>Used numerical analysis in Python and C++ to solve diffusion, reducing complexity from O(n³) to O(n).</li>
+            <li>Parallelized routines with CUDA and OpenMP, speeding up large-scale simulations by over 300%.</li>
           </ul>
+          <div class="xp-foot">
+            <span>C++</span>
+            <span>Python</span>
+            <span>CUDA</span>
+            <span>OpenMP</span>
+          </div>
+        </article>
+      </div>
+      <p class="xp-label">Leadership</p>
+      <div class="xp-roles">
+        <div class="xp-role-row">
+          <span class="xp-role-org">Aperture Partners</span>
+          <span class="xp-role-title">Vice President of Technology</span>
+          <span class="xp-role-when">Jul 2026 – Present</span>
+        </div>
+        <div class="xp-role-row">
+          <span class="xp-role-org">IU Student Government</span>
+          <span class="xp-role-title">Director of Technology</span>
+          <span class="xp-role-when">May 2025 – Jun 2026</span>
+        </div>
+        <div class="xp-role-row">
+          <span class="xp-role-org">Fintech at Indiana University</span>
+          <span class="xp-role-title">Director of Technology</span>
+          <span class="xp-role-when">Aug 2024 – Present</span>
         </div>
       </div>
-    </section>
-
-    <!-- Leadership Section -->
-    <section id="leadership" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
-            class="whitespace-nowrap">Leadership</span> ]</h2>
-        <canvas id="leadership-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
-      </div>
-      <div class="space-y-8">
-        <div>
-          <h3 class="text-xl font-semibold text-white">Indiana University Student Government</h3>
-          <p class="text-neutral-400 italic">Director of Technology, Faculty Council Technology Policy Committee
-            Member
-          </p>
-          <p class="text-neutral-500 text-sm">May 2025 – Present</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Built and maintain accessible web systems and internal tools serving 35,000+ students university
-              wide.</li>
-            <li>Direct a technology committee and an intern, and shape campus-wide tech policy as a Faculty Council
-              member.</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Fintech at Indiana University</h3>
-          <p class="text-neutral-400 italic">Director of Technology</p>
-          <p class="text-neutral-500 text-sm">August 2024 – Present</p>
-          <ul class="list-disc list-inside text-neutral-400 pl-1 space-y-1 mt-2 text-sm leading-relaxed">
-            <li>Simplified and taught complex computer science topics to 265+ members from diverse academic backgrounds.
-            </li>
-            <li>Built a JavaScript & SQLite club fund Discord bot with real-time trading APIs, logging more than 400
-              interactions.</li>
-          </ul>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Other Leadership</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">VP of Views IU (Hiking), Officer on HHCA Business and
-            Sustainability Council</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Education Section -->
-    <section id="education" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
-            class="whitespace-nowrap">Education</span> ]</h2>
-        <canvas id="education-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
-      </div>
-      <a href="./assets/Gabriel-Shores-Resume.pdf" target="_blank" rel="noopener noreferrer"
-        class="inline-block mb-8 border border-neutral-700 text-neutral-300 rounded-none py-2 px-5 text-sm hover:bg-white hover:text-black hover:border-white transition-colors duration-300">
-        <i class="fa-solid fa-file-arrow-down mr-2"></i>Download Resume
-      </a>
-      <div class="space-y-6">
-        <div>
-          <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-          <p class="text-neutral-400 italic">Accelerated M.S. Computer Science</p>
-          <p class="text-neutral-500 text-sm">Expected graduation May 2027</p>
-          <p class="text-neutral-500 text-sm">GPA 4.00 / 4.00</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white">Indiana University - Bloomington, IN</h3>
-          <p class="text-neutral-400 italic">B.S. Computer Science | B.S. Mathematics | Minor in Italian</p>
-          <p class="text-neutral-500 text-sm">Graduated May 2026</p>
-          <p class="text-neutral-500 text-sm">GPA 3.93 / 4.00</p>
-          <p class="text-neutral-500 mt-1 text-sm">Hutton Honors College. Cox, Luddy, Founder’s, and Provost
-            Scholar. Dean’s List 5x.</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Skills Section -->
-    <section id="skills" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ Skills ]</h2>
-        <canvas id="skills-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
-      </div>
-      <div class="grid md:grid-cols-2 gap-x-8 gap-y-6">
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Programming Languages</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">Java, Python, Go, C++, C, JavaScript / Node.js, C#, SQL
-          </p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">AI & Machine Learning</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">PyTorch, scikit-learn, NumPy, Pandas, Claude agent
-            skills, ML pipelines, feature engineering</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Infrastructure</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">Distributed systems, GCP, AWS, Docker, Kafka, Spark,
-            CI/CD, Linux, multi-threading</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Frameworks & Libraries</h3>
-          <p class="text-neutral-300 leading-relaxed text-sm">React.js, Node.js, Flask, Tailwind, Firebase, RESTful
-            APIs, Git, Claude Code, Cursor</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">CS Coursework</h3>
-          <p class="text-neutral-400 text-sm">Advanced Algorithms, Data Structures, Machine Learning, Operating
-            Systems, Databases, C & Unix, Discrete Math</p>
-        </div>
-        <div>
-          <h3 class="text-xl font-semibold text-white mb-2">Math Coursework</h3>
-          <p class="text-neutral-400 text-sm">Linear Algebra, Statistics, Calculus I–IV, Differential Equations
-            I–II, Real & Complex Analysis, Probability, Numerical Analysis</p>
-        </div>
-      </div>
-      <div class="mt-8">
-        <!--Github contribution chart stylized monochrome-->
-        <h3 class="text-xl font-semibold text-white mb-4">GitHub Contributions</h3>
-        <div class="bg-[#0a0a0a] border border-neutral-800 p-4 rounded-lg overflow-hidden">
-          <a href="https://github.com/Msde-7" target="_blank" rel="noopener noreferrer"
-            class="block hover:opacity-80 transition-opacity">
-            <img src="https://ghchart.rshah.org/000000/Msde-7" alt="Gabe Shores's Github chart" class="w-full invert" />
-            <p class="text-neutral-500 text-xs mt-2 text-center">My GitHub contribution activity</p>
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- Interests Section -->
-    <section id="interests" class="p-8 mb-12 w-full max-w-4xl scroll-mt-20 border-b border-neutral-800 pb-12">
-      <div class="flex items-center mb-6">
-        <h2 class="text-3xl font-bold text-white text-center md:text-left mr-4">[ <span
-            class="whitespace-nowrap">Other</span> Interests ]</h2>
-        <canvas id="interests-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
-      </div>
-      <p class="text-neutral-300 leading-relaxed text-sm">
-        Bass Guitar & Tuba, Hiking, Diving, Risk, P vs NP, Pikmin, Grand Strategy, Heavy Weather, Blade Runner
-      </p>
     </section>
 
     <!-- Quote Section -->
@@ -687,6 +536,8 @@
         "The struggle itself towards the heights is enough to fill a man's heart. One must imagine Sisyphus happy."
       </blockquote>
       <p class="text-neutral-500 text-right">- Albert Camus</p>
+      <canvas id="sisyphus-canvas" class="sisyphus" role="img"
+        aria-label="Wireframe Sisyphus pushing a boulder up a hill"></canvas>
     </section>
 
     <!-- Contact Section -->
@@ -697,21 +548,23 @@
         <canvas id="contact-animation-canvas" class="w-16 h-16 md:w-20 md:h-20"></canvas>
       </div>
       <p class="text-neutral-300 text-lg mb-6 max-w-4xl">
-        Always open to discussing new projects, creative ideas, or opportunities.
+        Always open to discussing new projects, creative ideas, opportunities, or just to chat.
       </p>
       <div class="flex justify-center">
         <a href="mailto:gshores@iu.edu"
-          class="inline-block bg-white text-black font-bold py-3 px-6 rounded-none hover:bg-black hover:text-white border border-white transition-colors duration-300 text-lg">
-          Say Hello <i class="fas fa-paper-plane ml-2"></i>
+          class="send-btn inline-block bg-white text-black font-bold py-3 px-6 rounded-none hover:bg-black hover:text-white border border-white transition-colors duration-300 text-lg">
+          Say Hello <span class="send-icon" aria-hidden="true"><span class="send-trail"></span><span
+              class="send-plane"><i class="fas fa-paper-plane"></i></span></span>
         </a>
       </div>
     </section>
 
   </main>
 
-  <script src="./js/ascii.js?v=constellation"></script>
-  <script src="./js/crt.js"></script>
-  <script src="./js/main.js"></script>
+  <script src="./js/ascii.js?v=0915"></script>
+  <script src="./js/crt.js?v=0915"></script>
+  <script src="./js/main.js?v=0915"></script>
+  <script src="./js/sisyphus.js?v=0915"></script>
 </body>
 
 </html>

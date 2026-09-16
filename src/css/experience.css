@@ -1,0 +1,391 @@
+/* Experience cards. A logo notch in the corner, a reticle that snaps out on
+   hover, and a dot grid that follows the pointer. */
+
+.xp-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .xp-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.xp-card {
+  --mx: 50%;
+  --my: 0%;
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 1.25rem 1.1rem;
+  background: #0f0f0f;
+  border: 1px solid #262626;
+  transition: border-color 0.3s, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+/* Reticle corners, tucked inside at rest */
+.xp-card::before {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  pointer-events: none;
+  background:
+    linear-gradient(#d4d4d4, #d4d4d4) top left / 12px 1px,
+    linear-gradient(#d4d4d4, #d4d4d4) top left / 1px 12px,
+    linear-gradient(#d4d4d4, #d4d4d4) top right / 12px 1px,
+    linear-gradient(#d4d4d4, #d4d4d4) top right / 1px 12px,
+    linear-gradient(#d4d4d4, #d4d4d4) bottom left / 12px 1px,
+    linear-gradient(#d4d4d4, #d4d4d4) bottom left / 1px 12px,
+    linear-gradient(#d4d4d4, #d4d4d4) bottom right / 12px 1px,
+    linear-gradient(#d4d4d4, #d4d4d4) bottom right / 1px 12px;
+  background-repeat: no-repeat;
+  opacity: 0;
+  transition: inset 0.4s cubic-bezier(0.2, 0.8, 0.2, 1), opacity 0.25s;
+}
+
+.xp-fx {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* Dot grid, only visible around the pointer */
+.xp-fx::before,
+.xp-fx::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.35s;
+}
+
+.xp-fx::before {
+  background-image: radial-gradient(circle, rgba(255, 255, 255, 0.2) 1px, transparent 1.4px);
+  background-size: 12px 12px;
+  -webkit-mask-image: radial-gradient(180px circle at var(--mx) var(--my), #000, transparent 75%);
+  mask-image: radial-gradient(180px circle at var(--mx) var(--my), #000, transparent 75%);
+}
+
+.xp-fx::after {
+  background: radial-gradient(360px circle at var(--mx) var(--my), rgba(255, 255, 255, 0.05), transparent 70%);
+}
+
+/* One refresh pass down the card on the way in */
+.xp-scan {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: 38%;
+  background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.018) 85%, rgba(255, 255, 255, 0.06) 99%, transparent);
+  transform: translateY(-100%);
+}
+
+.xp-logo {
+  position: absolute;
+  top: -1px;
+  right: -1px;
+  width: 3.75rem;
+  height: 3.75rem;
+  display: grid;
+  place-items: center;
+  background: #0a0a0a;
+  border: 1px solid #262626;
+  transition: border-color 0.3s;
+}
+
+.xp-logo img {
+  width: 58%;
+  height: 58%;
+  object-fit: contain;
+  opacity: 0.45;
+  transition: opacity 0.3s;
+}
+
+.xp-logo img.xp-wordmark {
+  width: 72%;
+}
+
+.xp-logo img.xp-badge {
+  width: 70%;
+  height: 70%;
+}
+
+.xp-head {
+  padding-right: 4.25rem;
+}
+
+.xp-when {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #737373;
+}
+
+.xp-title {
+  margin-top: 0.45rem;
+  font-size: 1.2rem;
+  line-height: 1.3;
+  font-weight: 600;
+  color: #fff;
+}
+
+.xp-title::after {
+  content: "_";
+  margin-left: 0.1em;
+  opacity: 0;
+}
+
+.xp-role {
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  font-style: italic;
+  color: #a3a3a3;
+}
+
+.xp-points {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: #a3a3a3;
+}
+
+.xp-points li {
+  position: relative;
+  padding-left: 1.2rem;
+}
+
+.xp-points li::before {
+  content: ">";
+  position: absolute;
+  left: 0;
+  color: #525252;
+  transition: color 0.3s, transform 0.3s;
+}
+
+.xp-points li:nth-child(2)::before { transition-delay: 0.04s; }
+.xp-points li:nth-child(3)::before { transition-delay: 0.08s; }
+
+.xp-foot {
+  margin-top: auto;
+  padding-top: 1.1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.xp-foot span {
+  font-size: 0.6875rem;
+  line-height: 1;
+  padding: 0.3rem 0.45rem;
+  border: 1px solid #262626;
+  color: #737373;
+  transition: border-color 0.3s, color 0.3s;
+}
+
+.xp-link {
+  margin-left: auto;
+  font-size: 0.75rem;
+  color: #a3a3a3;
+  transition: color 0.2s;
+}
+
+.xp-link i {
+  font-size: 0.65rem;
+}
+
+.xp-link:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+
+/* Hover ----------------------------------------------------------------- */
+
+.xp-card:hover,
+.xp-card:focus-within {
+  border-color: #525252;
+  transform: translateY(-3px);
+}
+
+.xp-card:hover::before,
+.xp-card:focus-within::before {
+  inset: -7px;
+  opacity: 1;
+}
+
+.xp-card:hover .xp-fx::before,
+.xp-card:hover .xp-fx::after {
+  opacity: 1;
+}
+
+.xp-card:hover .xp-scan {
+  animation: xp-scan 0.75s ease-out 1;
+}
+
+.xp-card:hover .xp-logo,
+.xp-card:focus-within .xp-logo {
+  border-color: #525252;
+}
+
+.xp-card:hover .xp-logo img,
+.xp-card:focus-within .xp-logo img {
+  opacity: 1;
+  animation: xp-flicker 0.4s steps(1) 1;
+}
+
+.xp-card:hover .xp-title::after {
+  animation: xp-caret 1s steps(1) infinite;
+}
+
+.xp-card:hover .xp-points li::before {
+  color: #e5e5e5;
+  transform: translateX(3px);
+}
+
+.xp-card:hover .xp-foot span {
+  border-color: #404040;
+  color: #d4d4d4;
+}
+
+@keyframes xp-scan {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(225%); }
+}
+
+/* The tube catching as it warms up */
+@keyframes xp-flicker {
+  0% { opacity: 0.45; }
+  20% { opacity: 1; }
+  35% { opacity: 0.3; }
+  55% { opacity: 1; }
+  70% { opacity: 0.7; }
+  100% { opacity: 1; }
+}
+
+@keyframes xp-caret {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xp-card,
+  .xp-card::before {
+    transition: none;
+  }
+
+  .xp-card:hover,
+  .xp-card:focus-within {
+    transform: none;
+  }
+
+  .xp-card:hover .xp-scan,
+  .xp-card:hover .xp-logo img,
+  .xp-card:hover .xp-title::after {
+    animation: none;
+  }
+}
+
+/* Leadership, one line per role -------------------------------------------- */
+
+.xp-label {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin: 2rem 0 0.3rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.xp-label::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #1f1f1f;
+}
+
+.xp-roles {
+  border-top: 1px solid #1a1a1a;
+}
+
+.xp-role-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto 9.5rem;
+  align-items: baseline;
+  gap: 0.2rem 1.25rem;
+  padding: 0.6rem 0 0.6rem 1rem;
+  border-bottom: 1px solid #1a1a1a;
+}
+
+.xp-role-row::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.6rem;
+  bottom: 0.6rem;
+  width: 2px;
+  background: #e5e5e5;
+  transform: scaleY(0);
+  transition: transform 0.25s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.xp-role-row:hover::before {
+  transform: scaleY(1);
+}
+
+.xp-role-org {
+  font-size: 0.9rem;
+  color: #d4d4d4;
+  transition: color 0.2s;
+}
+
+.xp-role-row:hover .xp-role-org {
+  color: #fff;
+}
+
+.xp-role-title {
+  font-size: 0.8rem;
+  font-style: italic;
+  color: #a3a3a3;
+  text-align: right;
+}
+
+.xp-role-when {
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #737373;
+  text-align: right;
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .xp-role-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    column-gap: 0.75rem;
+  }
+
+  .xp-role-org {
+    grid-column: 1 / -1;
+  }
+
+  .xp-role-title {
+    text-align: left;
+  }
+
+  .xp-role-when {
+    letter-spacing: 0.06em;
+  }
+}

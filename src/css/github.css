@@ -1,0 +1,52 @@
+/* GitHub contribution chart, under the project browser */
+
+.gh-block {
+  margin-top: 2.5rem;
+}
+
+.gh-head {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.6rem;
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #a3a3a3;
+}
+
+.gh-head::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #1f1f1f;
+}
+
+.gh-chart {
+  display: block;
+  padding: 0.9rem 1rem 0.7rem;
+  border: 1px solid #262626;
+  background: #0a0a0a;
+  transition: border-color 0.3s;
+}
+
+.gh-chart:hover {
+  border-color: #525252;
+}
+
+.gh-chart img {
+  width: 100%;
+  filter: invert(1);
+}
+
+.gh-chart p {
+  margin-top: 0.5rem;
+  font-size: 0.7rem;
+  text-align: right;
+  color: #525252;
+  transition: color 0.2s;
+}
+
+.gh-chart:hover p {
+  color: #d4d4d4;
+}

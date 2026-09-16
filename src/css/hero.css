@@ -1,0 +1,231 @@
+/* No header bar. The name and the section links live in the opening screen,
+   then a quiet index on the right edge (or a back to top button on narrow
+   screens) takes over once it scrolls away. */
+
+/* Starts at the top of the screen, so the words sit in the middle of it and
+   the divider underneath lands just past the fold. The pull up cancels the
+   margin and padding main puts above its first section. */
+@media (min-width: 768px) {
+  .hero {
+    margin-top: -5rem;
+    min-height: calc(100vh + 1rem);
+    min-height: calc(100svh + 1rem);
+    /* The words and the picture read as one block in the middle of the screen,
+       rather than one pinned to each edge */
+    justify-content: center;
+    gap: 3rem;
+  }
+}
+
+.hero-copy {
+  max-width: 34rem;
+}
+
+.hero-line span {
+  white-space: nowrap;
+}
+
+.hero-name {
+  margin-bottom: 0.9rem;
+  font-size: clamp(1.75rem, 8.2vw, 2.5rem);
+  line-height: 1.1;
+  font-weight: 700;
+  color: #fff;
+}
+
+@media (min-width: 768px) {
+  .hero-name {
+    font-size: 3.5rem;
+  }
+}
+
+.hero-wave {
+  display: inline-block;
+  margin-left: 0.35em;
+  font-size: 0.7em;
+  color: #737373;
+  vertical-align: 0.08em;
+  transform-origin: 70% 85%;
+  animation: hero-wave 1.6s ease-in-out 0.1s 2;
+}
+
+.hero-wave[hidden] {
+  display: none;
+}
+
+.hero-name:hover .hero-wave {
+  animation: hero-wave 1.6s ease-in-out infinite;
+}
+
+@keyframes hero-wave {
+  0%, 60%, 100% { transform: rotate(0deg); }
+  10% { transform: rotate(16deg); }
+  20% { transform: rotate(-8deg); }
+  30% { transform: rotate(14deg); }
+  40% { transform: rotate(-4deg); }
+  50% { transform: rotate(10deg); }
+}
+
+.hero-caret {
+  margin-left: 0.05em;
+  animation: xp-caret 1s steps(1) infinite;
+}
+
+.hero-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: baseline;
+  gap: 0.35rem 0.5rem;
+  margin-bottom: 1.75rem;
+  font-size: 0.9rem;
+}
+
+@media (min-width: 768px) {
+  .hero-nav {
+    justify-content: flex-start;
+  }
+}
+
+.hero-prompt {
+  margin-right: 0.25rem;
+  color: #525252;
+}
+
+.hero-nav a {
+  padding: 0.1rem 0.3rem;
+  color: #a3a3a3;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+/* Selected like text in a terminal */
+.hero-nav a:hover,
+.hero-nav a:focus-visible {
+  background: #e5e5e5;
+  color: #000;
+  outline: none;
+}
+
+/* Section index ---------------------------------------------------------- */
+
+.rail {
+  position: fixed;
+  top: 50%;
+  right: 1.5rem;
+  z-index: 40;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 0.2rem;
+  transform: translate(8px, -50%);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.35s, transform 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@media (min-width: 1180px) {
+  .rail {
+    display: flex;
+  }
+}
+
+.rail.is-shown {
+  transform: translate(0, -50%);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.rail a {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.3rem 0;
+  font-size: 0.7rem;
+  color: #525252;
+}
+
+.rail a span {
+  opacity: 0;
+  transform: translateX(4px);
+  transition: opacity 0.2s, transform 0.2s, color 0.2s;
+}
+
+.rail a::after {
+  content: "";
+  width: 12px;
+  height: 1px;
+  background: #404040;
+  transition: width 0.3s cubic-bezier(0.2, 0.8, 0.2, 1), background-color 0.3s;
+}
+
+.rail:hover a span,
+.rail a:focus-visible span,
+.rail a.is-current span {
+  opacity: 1;
+  transform: none;
+}
+
+.rail a:hover {
+  color: #d4d4d4;
+}
+
+.rail a:hover::after {
+  width: 20px;
+  background: #a3a3a3;
+}
+
+.rail a.is-current {
+  color: #e5e5e5;
+}
+
+.rail a.is-current::after {
+  width: 28px;
+  background: #e5e5e5;
+}
+
+/* Back to top, for screens without room for the index */
+.to-top {
+  position: fixed;
+  right: 1rem;
+  bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  width: 2.6rem;
+  height: 2.6rem;
+  color: #d4d4d4;
+  background: rgba(10, 10, 10, 0.85);
+  border: 1px solid #404040;
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+  transition: opacity 0.3s, transform 0.3s, background-color 0.2s, color 0.2s;
+}
+
+.to-top.is-shown {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+.to-top:hover {
+  background: #fff;
+  color: #000;
+}
+
+@media (min-width: 1180px) {
+  .to-top {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-caret,
+  .hero-wave,
+  .hero-name:hover .hero-wave {
+    animation: none;
+  }
+}

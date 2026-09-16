@@ -178,7 +178,7 @@
     root.add(box(14, 4, 0.1, wall, 0, 1.2, -1.45));
     root.add(box(0.1, 4, 12, wall, -3.1, 1.2, 0));
 
-    const wx = -1.78;
+    const wx = -1.88;
     const wy = 0.98;
     const pane = new THREE.Mesh(
       new THREE.PlaneGeometry(0.88, 0.68),
@@ -196,29 +196,29 @@
     root.add(box(0.88, 0.035, 0.035, frame, wx, wy, -1.385));
 
     const poster = new THREE.Mesh(new THREE.PlaneGeometry(0.66, 0.86), arpanetPoster());
-    poster.position.set(1.34, 1.06, -1.39);
+    poster.position.set(1.22, 1.06, -1.39);
     poster.rotation.z = -0.012;
     root.add(poster);
-    root.add(box(0.70, 0.90, 0.012, flat(0x14171c), 1.34, 1.06, -1.398));
+    root.add(box(0.70, 0.90, 0.012, flat(0x14171c), 1.22, 1.06, -1.398));
 
     const card = new THREE.Mesh(new THREE.PlaneGeometry(0.42, 0.30), helloCard());
-    card.position.set(-1.02, 0.46, -1.392);
+    card.position.set(-1.08, 0.46, -1.392);
     card.rotation.z = 0.03;
     root.add(card);
 
     const saga = new THREE.Mesh(new THREE.PlaneGeometry(0.60, 0.88), starWarsPoster());
-    saga.position.set(2.01, 1.00, -1.39);
+    saga.position.set(2.04, 1.00, -1.39);
     root.add(saga);
-    root.add(box(0.64, 0.92, 0.012, flat(0x14171c), 2.01, 1.00, -1.398));
+    root.add(box(0.64, 0.92, 0.012, flat(0x14171c), 2.04, 1.00, -1.398));
 
     const show = new THREE.Mesh(new THREE.PlaneGeometry(0.52, 0.728), regularShowPoster());
-    show.position.set(-1.04, 1.18, -1.392);
+    show.position.set(-0.99, 1.18, -1.392);
     show.rotation.z = -0.018;
     root.add(show);
     const tape = new THREE.MeshLambertMaterial({ color: 0xdad6c8, transparent: true, opacity: 0.55 });
     [[-0.24, 0.345], [0.24, 0.345], [-0.24, -0.345], [0.24, -0.345]].forEach((c) => {
       const t = new THREE.Mesh(new THREE.PlaneGeometry(0.07, 0.035), tape);
-      t.position.set(-1.04 + c[0], 1.18 + c[1], -1.390);
+      t.position.set(-0.99 + c[0], 1.18 + c[1], -1.390);
       t.rotation.z = c[0] * c[1] > 0 ? 0.7 : -0.7;
       root.add(t);
     });
@@ -580,30 +580,29 @@
       ctx.fillStyle = '#f4f2ec';
       ctx.fillRect(0, 0, w, h);
       ctx.fillStyle = '#1c6f7a';
-      ctx.fillRect(0, 128, w, 8);
-      ctx.fillRect(0, 296, w, 8);
+      ctx.fillRect(0, 132, w, 8);
+      ctx.fillRect(0, 300, w, 8);
 
+      // Three bands, each with its block centred in it
       ctx.textAlign = 'center';
       ctx.fillStyle = '#5b6169';
-      ctx.font = '16px Georgia, serif';
-      ctx.fillText('6TH EDITION', w / 2, 66);
+      ctx.font = '17px Georgia, serif';
+      ctx.fillText('6TH EDITION', w / 2, 48);
       ctx.fillStyle = '#1c6f7a';
-      ctx.font = '15px "Courier New", monospace';
-      ctx.fillText('189 PROGRAMMING QUESTIONS', w / 2, 98);
-      ctx.fillText('AND SOLUTIONS', w / 2, 118);
+      ctx.font = '14px "Courier New", monospace';
+      centred(ctx, ['189 PROGRAMMING QUESTIONS', 'AND SOLUTIONS'], w / 2, 86, 20);
 
       ctx.fillStyle = '#15181c';
-      ctx.font = 'italic 33px Georgia, serif';
-      ctx.fillText('Cracking', w / 2, 186);
-      ctx.font = 'bold 35px Georgia, serif';
-      centred(ctx, ['the CODING', 'INTERVIEW'], w / 2, 232, 44);
+      ctx.font = 'italic 34px Georgia, serif';
+      ctx.fillText('Cracking', w / 2, 184);
+      ctx.font = 'bold 36px Georgia, serif';
+      centred(ctx, ['the CODING', 'INTERVIEW'], w / 2, 229, 43);
 
-      ctx.fillStyle = '#15181c';
-      ctx.font = 'bold 19px Georgia, serif';
-      centred(ctx, ['GAYLE LAAKMANN', 'McDOWELL'], w / 2, 372, 26);
+      ctx.font = 'bold 20px Georgia, serif';
+      centred(ctx, ['GAYLE LAAKMANN', 'McDOWELL'], w / 2, 358, 27);
       ctx.fillStyle = '#5b6169';
-      ctx.font = '13px Georgia, serif';
-      ctx.fillText('FOUNDER AND CEO, CAREERCUP.COM', w / 2, 424);
+      ctx.font = '12px Georgia, serif';
+      ctx.fillText('FOUNDER AND CEO, CAREERCUP.COM', w / 2, 412);
     });
   }
 
@@ -1024,8 +1023,8 @@
     const dt = Math.min(0.05, (now - lastFrame) / 1000 || 0.016);
     lastFrame = now;
 
-    const boot = state.bootAt ? clamp01((now - state.bootAt) / 1150) : 0;
-    const blow = state.blowAt ? clamp01((now - state.blowAt) / 520) : 0;
+    const boot = state.bootAt ? clamp01((now - state.bootAt) / 1040) : 0;
+    const blow = state.blowAt ? clamp01((now - state.blowAt) / 470) : 0;
     if (boot !== state.boot || blow !== state.blow) {
       state.boot = boot;
       state.blow = blow;
@@ -1119,10 +1118,10 @@
     // The wide shot is the only look anyone gets at the desk, so hold it
     setTimeout(() => {
       state.bootAt = performance.now();
-      cutTo('boot', 2.4);
-    }, 620);
-    setTimeout(() => cutTo('typing', 1.9), 2950);
-    setTimeout(() => { if (done) done(); }, 2800);
+      cutTo('boot', 2.15);
+    }, 560);
+    setTimeout(() => cutTo('typing', 1.7), 2650);
+    setTimeout(() => { if (done) done(); }, 2520);
   }
 
   function dive(onReveal, onDone) {
@@ -1131,16 +1130,16 @@
       if (onDone) onDone();
       return;
     }
-    cutTo('align', 0.55);
-    setTimeout(() => cutTo('dive', 0.9), 520);
-    setTimeout(() => { state.blowAt = performance.now(); }, 780);
-    setTimeout(() => { if (onReveal) onReveal(); }, 1200);
-    setTimeout(() => overlay.classList.add('crt-out'), 1250);
+    cutTo('align', 0.5);
+    setTimeout(() => cutTo('dive', 0.8), 470);
+    setTimeout(() => { state.blowAt = performance.now(); }, 700);
+    setTimeout(() => { if (onReveal) onReveal(); }, 1080);
+    setTimeout(() => overlay.classList.add('crt-out'), 1125);
     setTimeout(() => {
       cancelAnimationFrame(raf);
       raf = 0;
       if (onDone) onDone();
-    }, 1750);
+    }, 1575);
   }
 
   function init() {
