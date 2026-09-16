@@ -21,6 +21,11 @@
   color: #d4d4d4;
 }
 
+/* The count is for the side by side layout, the nudge is for touch */
+.pj-tap {
+  display: none;
+}
+
 .pj-grid {
   display: grid;
   grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
@@ -328,8 +333,13 @@
     display: flex;
   }
 
-  .pj-hint {
+  .pj-hint,
+  .pj-count {
     display: none;
+  }
+
+  .pj-tap {
+    display: inline;
   }
 
   .pj-pane.is-open .pj-title {
